@@ -1217,12 +1217,12 @@ $(document).ready(function(){
                                     <td><?php echo $row["subject_code"] ?></td>
                                     <td><?php echo $row["subject_name"] ?></td>
                                     <td class="project-actions text-center">
-                                        <button class="btn btn-info btn-sm" onclick="document.getElementById('edit_subjects<?php echo $row["subject_id"]; ?>').style.display='block'">
+                                        <button class="btn btn-info btn-sm" onclick="document.getElementById('edit_subjects<?php echo $row['subject_id']; ?>').style.display='block'">
                                             <i class="fas fa-pencil-alt">
                                             </i>
                                             Edit
                                         </button>
-                                        <button class="btn btn-danger btn-sm" onclick="document.getElementById('delete_subjects<?php echo $row["subject_id"]; ?>').style.display='block'">
+                                        <button class="btn btn-danger btn-sm" onclick="document.getElementById('delete_subjects<?php echo $row['subject_id']; ?>').style.display='block'">
                                             <i class="fas fa-trash">
                                             </i>
                                             Delete

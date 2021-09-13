@@ -1859,9 +1859,13 @@ if (isset($_POST["action"])) {
     //Delete University Home End With Ajax
     //Delete University Prospectus Start With Ajax
     if ($_POST["action"] == "delete_university_prospectus_enquiry") {
-        $delete_id = $_POST["delete_id"];
+      echo  $delete_id = $_POST["delete_id"];
+        ?>
+
+        <?php
         if (!empty($delete_id)) {
-            $check = $objectSecond->update("tbl_prospectus", "`status` = '$trash' WHERE `id`='$delete_id'");
+            $query="UPDATE `tbl_prospectus` SET `status` = '$trash' where `id`='$delete_id' ";
+          $check= $con->query($query);
             if ($check == 1)
                 echo 'success';
             else
@@ -1887,21 +1891,25 @@ if (isset($_POST["action"])) {
 
     //Delete University Prospectus Start With Ajax
     if ($_POST["action"] == "update_prospectus_enquiry") {
-        $prosprectus_number = $_POST["prosprectus_number"];
+    echo    $prosprectus_number = $_POST["prosprectus_number"];
         $prosprectus_id = $_POST["prosprectus_id"];
         $prospectus_course_name = $_POST["prospectus_course_name"];
-        $prospectus_session = $_POST["prospectus_session"];
+     echo  $prospectus_session = $_POST["prospectus_session"];
         $prospectus_rate = $_POST["prospectus_rate"];
         $post_at = $_POST["post_at"];
         if (!empty($prosprectus_number && $prosprectus_id)) {
-            $objectSecond->select("tbl_prospectus");
-            $objectSecond->where("`status` = '$visible' && `prospectus_no` = '$prosprectus_number'");
-            $result = $objectSecond->get();
+            // $objectSecond->select("tbl_prospectus");
+            // $objectSecond->where("`status` = '$visible' && `prospectus_no` = '$prosprectus_number'");
+            // $result = $objectSecond->get();
+           $exist_check="SELECT * FROM `tbl_prospectus` WHERE `prospectus_no` = '$prosprectus_number' && `status`='$visible'";
+            $result=$con->query($exist_check);
             if ($result->num_rows > 0) {
                 echo 'exsits';
             } else {
                 $objectSecond->sql = "";
-                $check = $objectSecond->update("tbl_prospectus", "`prospectus_no` = '$prosprectus_number'  WHERE `id`='$prosprectus_id'");
+              echo  $update_query="UPDATE `tbl_prospectus` SET `prospectus_no`='$prosprectus_number' WHERE `id`='$prosprectus_id'";
+               $check=$con->query($update_query);
+                // $check = $objectSecond->update("tbl_prospectus", "`prospectus_no` = '$prosprectus_number'  WHERE `id`='$prosprectus_id'");
                 if ($check == 1) {
                     $date = date_create()->format('yy-m-d');
                     $objectSecond->sql = "";

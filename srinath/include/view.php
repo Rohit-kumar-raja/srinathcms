@@ -32,6 +32,7 @@
     });
 </script>
 <?php
+
 //Starting Session
 if (empty(session_start()))
     session_start();
@@ -7793,9 +7794,9 @@ if (isset($_GET["action"])) {
         $objectSecond->sql = "";
         $start = intval($_POST["start"]);
         $lenghtOfData = intval($_POST["lenghtOfData"]);
-        //            echo "hello";
-        //            exit(0);
-    ?>
+                //    echo "hello";
+                //    exit(0);
+     ?>
 
         <table id="example1" class="table table-bordered table-striped">
             <thead>
@@ -7812,21 +7813,27 @@ if (isset($_GET["action"])) {
                 </tr>
             </thead>
             <tbody>
+                
                 <?php
-                $objectSecond->select("tbl_prospectus");
-                if (strtolower($lenghtOfData) == "all") {
-                    $objectSecond->where("`status` = '$visible' && `type` = 'enquiry' ORDER BY `id` DESC ");
-                    $s_no = 1;
-                } else if ($start == 1) {
-                    $objectSecond->where("`status` = '$visible' && `type` = 'enquiry' ORDER BY `id` DESC LIMIT " . $lenghtOfData);
-                    $s_no = $start;
-                } else {
-                    $objectSecond->where("`status` = '$visible' && `type` = 'enquiry' ORDER BY `id` DESC LIMIT " . $start . ", " . $lenghtOfData);
-                    $s_no = ++$start;
-                }
-                $result = $objectSecond->get();
+                $trash = md5("trash");
+                $tbl_prospectus="SELECT * FROM `tbl_prospectus` WHERE `status`!='$trash' ";
+                // $result=mysqli_quary($con,$tbl_prospectus);
+            
+                // $objectSecond->select("tbl_prospectus");
+                // if (strtolower($lenghtOfData) == "all") {
+                //     $objectSecond->where("`status` = '$visible' && `type` = 'enquiry' ORDER BY `id` DESC ");
+                //     $s_no = 1;
+                // } else if ($start == 1) {
+                //     $objectSecond->where("`status` = '$visible' && `type` = 'enquiry' ORDER BY `id` DESC LIMIT " . $lenghtOfData);
+                //     $s_no = $start;
+                // } else {
+                //     $objectSecond->where("`status` = '$visible' && `type` = 'enquiry' ORDER BY `id` DESC LIMIT " . $start . ", " . $lenghtOfData);
+                //     $s_no = ++$start;
+                // }
+                // $result = $objectSecond->get();
+            $result= $con->query($tbl_prospectus);
                 if ($result->num_rows > 0) {
-                    while ($row = $objectSecond->get_row()) {
+                    while ($row = $result->fetch_assoc()) {
                 ?>
                         <tr>
                             <td><?php echo $s_no; ?></td>
@@ -7839,12 +7846,12 @@ if (isset($_GET["action"])) {
                             <td><?php echo $row["payment_status"] ?></td>
                             <td><?php echo $row["post_at"] ?></td>
                             <td class="project-actions text-center">
-                                <button class="btn btn-info btn-sm" onclick="document.getElementById('view_university_prospectus_enquiry<?php echo $row["id"]; ?>').style.display='block'">
+                                <button class="btn btn-info btn-sm" onclick="document.getElementById('view_university_prospectus_enquiry<?php echo $row['id']; ?>').style.display='block'">
                                     <i class="fas fa-eye">
                                     </i>
                                     View
                                 </button>
-                                <button class="btn btn-danger btn-sm" onclick="document.getElementById('delete_university_prospectus_enquiry<?php echo $row["id"]; ?>').style.display='block'">
+                                <button class="btn btn-danger btn-sm" onclick="document.getElementById('delete_university_prospectus_enquiry<?php echo $row['id']; ?>').style.display='block'">
                                     <i class="fas fa-trash">
                                     </i>
                                     Delete
@@ -7855,7 +7862,7 @@ if (isset($_GET["action"])) {
                             <div id="view_university_prospectus_enquiry<?php echo $row["id"]; ?>" class="w3-modal" style="z-index:2020;">
                                 <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%; margin-bottom:50px;">
                                     <header class="w3-container" style="background:#343a40; color:white;">
-                                        <span onclick="document.getElementById('view_university_prospectus_enquiry<?php echo $row["id"]; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                        <span onclick="document.getElementById('view_university_prospectus_enquiry<?php echo $row['id']; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                                         <h2 align="center">View Details</h2>
                                     </header>
                                     <form role="form" method="POST">
@@ -7866,6 +7873,7 @@ if (isset($_GET["action"])) {
                                                         <label>Prospectus No</label>
                                                         <div class="input-group mb-3">
                                                             <input type="text" id="unversity_prospectus_number<?php echo $row["id"] ?>" name="unversity_prospectus_number" class="form-control" value="<?php echo $row["prospectus_no"] ?>">
+                                                            <input type="hidden" id="prospectus_session<?php echo $row["id"] ?>" name="prospectus_session" class="form-control" value="<?php echo $row["prospectus_session"] ?>">
                                                             <input type="hidden" id="prospectus_course_name<?php echo $row["id"] ?>" name="prospectus_course_name" class="form-control" value="<?php echo $row["prospectus_course_name"] ?>">
                                                             <input type="hidden" id="prospectus_rate<?php echo $row["id"] ?>" name="prospectus_rate" class="form-control" value="<?php echo $row["prospectus_rate"] ?>">
                                                             <input type="hidden" id="post_at<?php echo $row["id"] ?>" name="post_at" class="form-control" value="<?php echo $row["post_at"] ?>">
@@ -8065,7 +8073,7 @@ if (isset($_GET["action"])) {
                             <div id="delete_university_prospectus_enquiry<?php echo $row["id"]; ?>" class="w3-modal" style="z-index:2020;">
                                 <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
                                     <header class="w3-container" style="background:#343a40; color:white;">
-                                        <span onclick="document.getElementById('delete_university_prospectus_enquiry<?php echo $row["id"]; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                        <span onclick="document.getElementById('delete_university_prospectus_enquiry<?php echo $row['id']; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                                         <h2 align="center">Are you sure???</h2>
                                     </header>
                                     <form id="delete_university_prospectus_enquiry_form<?php echo $row["id"]; ?>" role="form" method="POST">
@@ -8076,7 +8084,7 @@ if (isset($_GET["action"])) {
                                                 <input type='hidden' name='action' id="action_delete<?php echo $row["id"]; ?>" value='delete_university_prospectus_enquiry' />
                                                 <div class="col-md-12" id="delete_loader_section<?php echo $row["id"]; ?>"></div>
                                                 <button type="button" id="delete_university_prospectus_enquiry_button<?php echo $row["id"]; ?>" class="btn btn-danger">Move To Trash</button>
-                                                <button type="button" onclick="document.getElementById('delete_university_prospectus_enquiry<?php echo $row["id"]; ?>').style.display='none'" class="btn btn-primary">Cancel</button>
+                                                <button type="button" onclick="document.getElementById('delete_university_prospectus_enquiry<?php echo $row['id']; ?>').style.display='none'" class="btn btn-primary">Cancel</button>
                                             </div>
 
                                             <!--<button type="reset" class="btn btn-danger">Reset</button>-->
@@ -8189,7 +8197,7 @@ if (isset($_GET["action"])) {
     }
     //Nsuniv Prospectus Enquiry End
     //Nsuniv Get Started Enquiry Start
-    if ($_GET["action"] == "get_nsuniv_get_enquiry") {
+    if ($_GET["action"] == "get_nsuniv-admission-enquiry") {
         $objectSecond->update("tbl_alert", "`get_started_enquiry` = '0' WHERE `id`='1'");
         $objectSecond->sql = "";
     ?>
