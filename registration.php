@@ -162,7 +162,7 @@ if (isset($_SESSION['email']) && ($_SESSION['email'] != '')) {
                                                                     <?php if ($prospectus_course_name != '') { ?>
                                                                         <option value=" <?php echo $prospectus_course_name ?>" selected><?php echo $prospectus_course_name; ?></option>
                                                                     <?php } ?>
-                                                                    <option disabled="">Choose your option</option>
+                                                                    <option selected disabled="">Choose your option</option>
                                                                     <?php while ($row = mysqli_fetch_array($course_name_result)) {
                                                                     ?>
                                                                         <option value="<?php echo $row['course_name']; ?>"><?php echo $row['course_name']; ?></option>
@@ -183,7 +183,7 @@ if (isset($_SESSION['email']) && ($_SESSION['email'] != '')) {
                                                                 <?php if ($prospectus_session != '') { ?>
                                                                     <option value=" <?php echo $prospectus_session ?>" selected><?php echo $prospectus_session; ?></option>
                                                                 <?php } ?>
-                                                                <option value=" " disabled="">-Select-</option>
+                                                                <option value=" " selected disabled="">-Select-</option>
                                                                 <option value="<?php echo date('Y');
                                                                                 echo " - ";
                                                                                 echo date('Y', strtotime('+3 year')); ?>"><?php echo date('Y');
