@@ -257,7 +257,7 @@ if (isset($_SESSION['email']) && ($_SESSION['email'] != '')) {
                                                                 <?php if ($prospectus_gender!=''){ ?>
                                                                     <option id="gender" selected value="<?php echo $prospectus_gender; ?>"><?php echo $prospectus_gender ?></option>
                                                                     <?php } ?>
-                                                                <option value="" disabled="">-Select-</option>
+                                                                <option value="" selected disabled="">-Select-</option>
                                                                 <option id="gender" value="Male">Male</option>
                                                                 <option id="gender" value="Female">Female</option>
                                                                 <option id="gender" value="Transgender">Transgender</option>
@@ -310,7 +310,7 @@ if (isset($_SESSION['email']) && ($_SESSION['email'] != '')) {
                                                             <?php if ($prospectus_state!=''){ ?>
                                                                     <option id="state1" selected value="<?php echo $prospectus_state ; ?>"><?php echo $prospectus_state; ?></option>
                                                                     <?php } ?>
-                                                                <option id="state1" value="" disabled="" >-Select-</option>
+                                                                <option id="state1" selected value="" disabled="" >-Select-</option>
                                                                 <option id="state1" value="Andhra Pradesh">Andhra Pradesh</option>
                                                                 <option id="state1" value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
                                                                 <option id="state1" value="Arunachal Pradesh">Arunachal Pradesh</option>
