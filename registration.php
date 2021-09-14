@@ -376,7 +376,7 @@ if (isset($_SESSION['email']) && ($_SESSION['email'] != '')) {
                                                         <p>
                                                             <label>
                                                                 <input required type="checkbox" id="declare_1" name="declare_1" value="1">
-                                                                <span>I declare that I meet all the eligibility criteria of admission as per the university guideline. In case of failure to do so or , in case of non-submission of required document by scheduled date given by university , my admission shall stand cancelled &amp; fees paid will be forfeited</span>
+                                                                <span>I declare that I meet all the eligibility criteria of admission as per the university guideline</span>
                                                             </label>
                                                         </p>
                                                         <div class="error" id="declare_1_err"></div>
