@@ -336,5 +336,5 @@ return false;
       
     </script>
 </body>
-
+  <script src="./dist/js/Remaingcheck.js"></script>
 </html>
