@@ -1,13 +1,13 @@
-<?php 
-    $page_no = "1";
-    $page_no_inside = "";
-    include "include/authentication.php"; 
+<?php
+$page_no = "1";
+$page_no_inside = "";
+include "include/authentication.php";
 ?>
-<?php 
-	$sql = "SELECT * FROM `tbl_admission` WHERE `status` = '$visible' && `admission_username` = '".$_SESSION["logger_username1"]."'";
-	$result = $con->query($sql);
-	$row = $result->fetch_assoc();
- ?>
+<?php
+$sql = "SELECT * FROM `tbl_admission` WHERE `status` = '$visible' && `admission_username` = '" . $_SESSION["logger_username1"] . "'";
+$result = $con->query($sql);
+$row = $result->fetch_assoc();
+?>
 <!DOCTYPE html>
 <html>
 
@@ -53,7 +53,6 @@
                 }
             })
         })
-
     </script>
 </head>
 
@@ -84,10 +83,111 @@
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+                    <!-- Small boxes (Stat box) -->
                     <div class="row">
-                    <h5 class="m-0 text-dark">&emsp;&emsp;Hello, <?php echo ucfirst($row["admission_first_name"]) ?> <?php echo ucfirst($row["admission_middle_name"]) ?> <?php echo ucfirst($row["admission_last_name"]) ?> - Welcome to your dashboard
-                   <br>&emsp;&emsp;If you want to update your profile information than please drop a message in <a href="complaint">Complaint Management</a>
-                    </h5>
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?php echo "Profile" ?></h3>
+
+                                    <p>Details</p>
+                                </div>
+                                <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="./userprofile.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>Fee<sup style="font-size: 20px"></sup></h3>
+
+                                    <p>Payment</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
+                                </div>
+                                <a href="./payfee.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3><?php echo "Payment";  ?></h3>
+
+                                    <p>Details</p>
+                                </div>
+                                <div class="icon">
+                                <i class="fas fa-receipt"></i>
+                                </div>
+                                <a href="./fee_details.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <div class="inner">
+                                    <h3><?php echo "Admit" ?></h3>
+
+                                    <p>Card</p>
+                                </div>
+                                <div class="icon">
+                                <i class="fas fa-address-card"></i>
+                                </div>
+                                <a href="./admitcard.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                           <!-- ./col -->
+                           <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-secondary">
+                                <div class="inner">
+                                    <h3><?php echo "Attendance" ?></h3>
+
+                                    <p>Report</p>
+                                </div>
+                                <div class="icon">
+                                <i class="fas fa-book-reader"></i>
+                                </div>
+                                <a href="./admitcard.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                           <!-- ./col -->
+                           <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-primary">
+                                <div class="inner">
+                                    <h3><?php echo "Bus" ?></h3>
+
+                                    <p> Tracking</p>
+                                </div>
+                                <div class="icon">
+                                <i class="fas fa-location-arrow"></i>
+                                </div>
+                                <a href="./admitcard.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- Main row -->
+
+            </section>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h5 class="m-0 text-dark">&emsp;&emsp;Hello, <a href="#"><?php echo ucfirst($row["admission_first_name"]) ?> </a>- Welcome to your dashboard
+                            <br>&emsp;&emsp;If you want to update your profile information than please drop a message in <a href="complaint">Complaint Management</a>
+                        </h5>
                     </div>
                 </div>
             </section>
@@ -111,7 +211,6 @@
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
-
     </script>
     <!-- Bootstrap 4 -->
     <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -80,7 +80,7 @@
                   </li>
                    <li class="nav-item has-treeview" <?php $flag=0; if(isset($autority)){ $allAutority = explode(",", $autority); for($i=0; $i<count($allAutority);$i++){ if($allAutority[$i] == "5"){ $flag++; break; } } if($flag == 0){ echo "style='display:none;'"; } } ?>>
                       <a href="#" class="nav-link <?php if($page_no == "4"){ echo 'active'; } ?>">
-                          <i class="nav-icon fas fa-book"></i>
+                          <i class="nav-icon fas fa-chalkboard-teacher"></i>
                           <p>
                               Exam 
                               <i class="fas fa-angle-left right"></i>
@@ -97,7 +97,7 @@
                   </li>
                   <li class="nav-item has-treeview" <?php $flag=0; if(isset($autority)){ $allAutority = explode(",", $autority); for($i=0; $i<count($allAutority);$i++){ if($allAutority[$i] == "7"){ $flag++; break; } } if($flag == 0){ echo "style='display:none;'"; } } ?>>
                     <a href="#" class="nav-link <?php if($page_no == "7"){ echo 'active'; } ?>">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fas fa-address-card"></i>
                         <p>
                             Admit Card Management
                             <i class="fas fa-angle-left right"></i>
@@ -112,9 +112,26 @@
                         </li>
                     </ul>
                 </li>
-                     <li class="nav-item has-treeview" <?php $flag=0; if(isset($autority)){ $allAutority = explode(",", $autority); for($i=0; $i<count($allAutority);$i++){ if($allAutority[$i] == "6"){ $flag++; break; } } if($flag == 0){ echo "style='display:none;'"; } } ?>>
+                <li class="nav-item has-treeview" <?php $flag=0; if(isset($autority)){ $allAutority = explode(",", $autority); for($i=0; $i<count($allAutority);$i++){ if($allAutority[$i] == "6"){ $flag++; break; } } if($flag == 0){ echo "style='display:none;'"; } } ?>>
+                    <a href="#" class="nav-link <?php if($page_no == "10"){ echo 'active'; } ?>">
+                        <i class="nav-icon fas fa-book-reader"></i>
+                        <p>
+                            Attendance Management
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="attendance" class="nav-link <?php if($page_no_inside == "6_2"){ echo 'active'; } ?>">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Attendance</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                 <li class="nav-item has-treeview" <?php $flag=0; if(isset($autority)){ $allAutority = explode(",", $autority); for($i=0; $i<count($allAutority);$i++){ if($allAutority[$i] == "6"){ $flag++; break; } } if($flag == 0){ echo "style='display:none;'"; } } ?>>
                     <a href="#" class="nav-link <?php if($page_no == "6"){ echo 'active'; } ?>">
-                        <i class="nav-icon fas fa-book"></i>
+                        <i class="nav-icon fa fa-comments"></i>
                         <p>
                             Complaint Management
                             <i class="fas fa-angle-left right"></i>

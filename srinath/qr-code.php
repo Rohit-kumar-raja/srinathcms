@@ -2,7 +2,7 @@
     // Include the qrlib file 
     include 'include/qr-lib/qrlib.php'; 
     $data = array(
-                "university"        =>  "nsuniv.ac.in",
+                "university"        =>  "www.srinathuniversity.in",
                 "regNo"             =>  "106",
                 "academicSession"   =>  "2019-2022",
                 "courseName"        =>  "BBA",

@@ -1,7 +1,7 @@
-<?php 
-    $page_no = "7";
-    $page_no_inside = "7_7";
-    include "include/authentication.php"; 
+<?php
+$page_no = "7";
+$page_no_inside = "7_7";
+include "include/authentication.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-        
+
     </script>
 
     <!-- Google Font: Source Sans Pro -->
@@ -48,7 +48,6 @@
         td {
             border-collapse: collapse;
         }
-
     </style>
 </head>
 
@@ -81,7 +80,7 @@
                 <div class="container-fluid">
                     <!-- SELECT2 EXAMPLE -->
                     <div class="card card-default">
-                       <!-- <div class="card-header">
+                        <!-- <div class="card-header">
                             <h3 class="card-title">Pay Fee</h3>
 
                             <div class="card-tools">
@@ -92,7 +91,7 @@
                         <form role="form" method="POST" id="fetchStudentDataForm">
                             <div class="card-body" style="margin-top: 0px;">
                                 <div class="row">
-                                   <div class="col-md-12" id="error_section"></div>
+                                    <div class="col-md-12" id="error_section"></div>
                                     <div class="col-md-5">
                                         <label>Student Registration No</label>
                                         <input type="text" name="studentRegistrationNo" class="form-control">
@@ -102,12 +101,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <center><hr style="width:80%;"></center>
+                            <center>
+                                <hr style="width:80%;">
+                            </center>
                             <div class="col-12" id="loader_section"></div>
                         </form>
-                        <br/>
+                        <br />
                         <div id="data_table" class="col-md-12" style="margin-top: -35px;">
-                        
+
                         </div>
                     </div>
 
@@ -147,7 +148,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- Page script -->
-    
+
     <script>
         $(function() {
             //Initialize Select2 Elements
@@ -219,11 +220,10 @@
             });
 
         });
-
     </script>
     <script>
         $(document).ready(function() {
-            $('#fetchStudentDataForm').submit(function( event ) {
+            $('#fetchStudentDataForm').submit(function(event) {
                 $('#loader_section').append('<center id = "loading"><img width="50px" src = "images/ajax-loader.gif" alt="Currently loading" /><br/><br/></center>');
                 $('#fetchStudentDataButton').prop('disabled', true);
                 $.ajax({
@@ -233,14 +233,14 @@
                     success: function(result) {
                         //$("#data_table").html(result);
                         $('#response').remove();
-                        if(result == 0){
+                        if (result == 0) {
                             $('#error_section').append('<div id = "response"><div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Please enter Registration Number!!!</div></div>');
-                        } else if(result == 1){
-                                    $('#error_section').append('<div id = "response"><div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Please select Academic Year!!!</div></div>');
-                                } else{
-                                    //$('#fetchStudentDataForm')[0].reset();
-                                    $('#data_table').append('<div id = "response">' + result + '</div>');
-                                }
+                        } else if (result == 1) {
+                            $('#error_section').append('<div id = "response"><div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Please select Academic Year!!!</div></div>');
+                        } else {
+                            //$('#fetchStudentDataForm')[0].reset();
+                            $('#data_table').append('<div id = "response">' + result + '</div>');
+                        }
                         $('#loading').fadeOut(500, function() {
                             $(this).remove();
                             $('#fetchStudentDataButton').prop('disabled', false);

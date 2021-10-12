@@ -8,5 +8,5 @@
     unset($_SESSION["logger_username1"]);
     unset($_SESSION["logger_password1"]);
     if(!isset($_SESSION["logger_username1"]) && !isset($_SESSION["logger_password1"]))
-        echo "<script> location.replace('student_login'); </script>";
+        echo "<script> location.replace('index'); </script>";
 ?>

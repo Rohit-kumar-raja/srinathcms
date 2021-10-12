@@ -1,36 +1,4 @@
-<style>
-    #example_filter {
-        float: right !important;
-    }
-</style>
 
-
-<script>
-    $(document).ready(function() {
-        $('#example').DataTable({
-            initComplete: function() {
-                this.api().columns().every(function() {
-                    var column = this;
-                    var select = $('<select><option value=""></option></select>')
-                        .appendTo($(column.footer()).empty())
-                        .on('change', function() {
-                            var val = $.fn.dataTable.util.escapeRegex(
-                                $(this).val()
-                            );
-
-                            column
-                                .search(val ? '^' + val + '$' : '', true, false)
-                                .draw();
-                        });
-
-                    column.data().unique().sort().each(function(d, j) {
-                        select.append('<option value="' + d + '">' + d + '</option>')
-                    });
-                });
-            }
-        });
-    });
-</script>
 <?php
 
 //Starting Session
@@ -39,6 +7,31 @@ if (empty(session_start()))
 //DataBase Connectivity
 include "config.php";
 include "db_class.php";
+// this method is getting all the data of course id and course session id
+
+ function seesion_coursse_id($studentRegistrationNo){
+    include "config.php";
+    $session_qury = "SELECT * FROM `tbl_admission` WHERE `admission_id`='$studentRegistrationNo'";
+    $result_session = mysqli_query($con, $session_qury);
+    $session_data = mysqli_fetch_array($result_session);
+    $admission_sesssion = trim($session_data['admission_session']);
+    $course_name = trim($session_data['admission_course_name']);
+    // checking the condition admission session
+    if ($admission_sesssion == '01/04/'.date('Y').'-31/03/'.date('Y', strtotime('+3 year'))) {
+        $admission_sesssion = 3;
+    } elseif ($admission_sesssion =='01/04/'.date('Y').'-31/03/'.date('Y', strtotime('+3 year'))) {
+        $admission_sesssion = 2;
+    } else {
+        $admission_sesssion = 4;
+    }
+    // getting the session id
+   $course_id_query = "SELECT * FROM `tbl_course` WHERE `course_name`='$course_name' ";
+    $course_id_result = mysqli_query($con, $course_id_query);
+    $course_data = mysqli_fetch_array($course_id_result);
+    $course_id_data = $course_data['course_id'];
+    $arr=array('session_id'=>$admission_sesssion,'course_id'=>$course_id_data);
+     return $arr;
+} 
 // Setting Time Zone in India Standard Timing
 $random_number = rand(111111, 999999); // Random Number
 $s_no = 1; //Serial Number
@@ -71,10 +64,10 @@ $objectSecond->userName = "";
 $objectSecond->password = "";
 $objectSecond->dbName =   "";
 if($_SERVER['HTTP_HOST']=='localhost'){
-    $objectDefault->new_db("localhost", "root", "", "srinath_cms");    }
+    $objectSecond->new_db("localhost", "root", "", "srinath_cms");    }
 // if the database in the server
 else{
-    $objectDefault->new_db("localhost", "phpmyadmin", "raja@#", "srinath_cms");
+    $objectSecond->new_db("localhost", "phpmyadmin", "raja@#", "srinath_cms");
     }
 // $objectSecond->new_db("localhost", "nsucms_cms", "wpNnnOv5", "nsucms_cms");
 //All File Directries End
@@ -232,7 +225,7 @@ if (isset($_GET["action"])) {
                                     <?php
                                     if (!empty($row["admission_profile_image"])) {
                                     ?>
-                                        <img class="profile-user-img " src="images/student_images/<?php echo $row["admission_profile_image"]; ?>" alt="Student profile picture">
+                                         <img class="profile-user-img " src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($row["admission_profile_image"]) . '" ' ?> alt="Student profile picture">
                                     <?php
                                     } else if (strtolower($row["admission_gender"]) == "female") {
                                     ?>
@@ -986,6 +979,7 @@ if (isset($_GET["action"])) {
                     <th>S.No</th>
                     <th>Course</th>
                     <th>Prospectus fee</th>
+                    <th>Course Duration</th>
                     <th class="project-actions text-center">Action </th>
                 </tr>
             </thead>
@@ -1003,6 +997,7 @@ if (isset($_GET["action"])) {
                             <td><?php echo $s_no; ?></td>
                             <td><?php echo $row["course_name"] ?></td>
                             <td><?php echo $row["prospectus_rate"] ?></td>
+                            <td><?php echo $row["course_duration"] ?></td>
                             <td class="project-actions text-center">
                                 <button class="btn btn-info btn-sm" onclick="document.getElementById('edit_courses<?php echo $row["course_id"]; ?>').style.display='block'">
                                     <i class="fas fa-pencil-alt">
@@ -1021,7 +1016,7 @@ if (isset($_GET["action"])) {
                             <div id="edit_courses<?php echo $row["course_id"]; ?>" class="w3-modal" style="z-index:2020;">
                                 <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
                                     <header class="w3-container" style="background:#343a40; color:white;">
-                                        <span onclick="document.getElementById('edit_courses<?php echo $row["course_id"]; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                        <span onclick="document.getElementById('edit_courses<?php echo $row['course_id']; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                                         <h2 align="center">Edit Course</h2>
                                     </header>
                                     <form id="edit_course_form<?php echo $row["course_id"]; ?>" role="form" method="POST">
@@ -1035,8 +1030,16 @@ if (isset($_GET["action"])) {
                                                         </label>
                                                     </div>
                                                     <div class="form-group col-sm-6">
-                                                     <label>Prospectus Price
-                                                       <input type="text" name="prospectus_fee" class="form-control">
+                                                     <label>Prospectus fee
+                                                     <input type="text" name="prospectus_fee" id="propectus_fee<?php echo $row["course_id"]; ?>" class="form-control" value="<?php echo $row["prospectus_rate"]; ?>">
+
+                                                      </label>
+                                                      
+                                                     </div>
+                                                     <div class="form-group col-sm-6">
+                                                     <label>Course Duration 
+                                                     <input type="text" name="edit_course_duration" id="duration<?php echo $row["course_id"]; ?>" class="form-control" value="<?php echo $row["course_duration"]; ?>">
+
                                                       </label>
                                                       
                                                      </div>
@@ -1059,7 +1062,9 @@ if (isset($_GET["action"])) {
                                                 var action = $("#action<?php echo $row["course_id"]; ?>").val();
                                                 var edit_course_id = $("#edit_course_id<?php echo $row["course_id"]; ?>").val();
                                                 var edit_course_name = $("#edit_course_name<?php echo $row["course_id"]; ?>").val();
-                                                var dataString = 'action=' + action + '&edit_course_id=' + edit_course_id + '&edit_course_name=' + edit_course_name;
+                                                var edit_course_fee = $("#prospectus_fee<?php echo $row["course_id"]; ?>").val();
+                                                var edit_course_duration = $("#duration<?php echo $row["course_id"]; ?>").val();
+                                                var dataString = 'action=' + action + '&edit_course_id=' + edit_course_id + '&edit_course_name=' + edit_course_name+'&edit_course_fee='+edit_course_fee+'&edit_course_duration='+edit_course_duration;
 
                                                 $.ajax({
                                                     url: 'include/controller.php',
@@ -1902,12 +1907,12 @@ if (isset($_GET["action"])) {
                             <td><?php echo $s_no; ?></td>
                             <td><?php echo $row["prospectus_no"]; ?></td>
                             <td class="project-actions text-center">
-                                <button class="btn btn-primary btn-sm" onclick="document.getElementById('trase_prospectus_restore<?php echo $row["id"]; ?>').style.display='block'">
+                                <button class="btn btn-primary btn-sm" onclick="document.getElementById('trase_prospectus_restore<?php echo $row['id']; ?>').style.display='block'">
                                     <i class="far fa-circle nav-icon">
                                     </i>
                                     Restore
                                 </button>
-                                <button class="btn btn-danger btn-sm" onclick="document.getElementById('trase_prospectus_delete<?php echo $row["id"]; ?>').style.display='block'">
+                                <button class="btn btn-danger btn-sm" onclick="document.getElementById('trase_prospectus_delete<?php echo $row['id']; ?>').style.display='block'">
                                     <i class="fas fa-trash nav-icon">
                                     </i>
                                     Delete
@@ -1918,7 +1923,7 @@ if (isset($_GET["action"])) {
                             <div id="trase_prospectus_delete<?php echo $row["id"]; ?>" class="w3-modal" style="z-index:2020;">
                                 <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
                                     <header class="w3-container" style="background:#343a40; color:white;">
-                                        <span onclick="document.getElementById('trase_prospectus_delete<?php echo $row["id"]; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                        <span onclick="document.getElementById('trase_prospectus_delete<?php echo $row['id']; ?>').style.display='none'" class="w3-button w3-display-topright">&times;</span>
                                         <h2 align="center">Are you sure???</h2>
                                     </header>
                                     <form id="trase_prospectus_delete_form<?php echo $row["id"]; ?>" role="form" method="POST">
@@ -1930,7 +1935,7 @@ if (isset($_GET["action"])) {
                                                 <input type='hidden' name='delete_id' id="trase_prospectus_delete_id<?php echo $row["id"]; ?>" value='<?php echo $row["id"]; ?>' />
                                                 <div class="col-md-12" id="trase_prospectus_delete_loader_section<?php echo $row["id"]; ?>"></div>
                                                 <button type="button" id="trase_prospectus_delete_prospectus_button<?php echo $row["id"]; ?>" class="btn btn-danger">Delete Permanently</button>
-                                                <button type="button" onclick="document.getElementById('trase_prospectus_delete<?php echo $row["id"]; ?>').style.display='none'" class="btn btn-primary">Cancel</button>
+                                                <button type="button" onclick="document.getElementById('trase_prospectus_delete<?php echo $row['id']; ?>').style.display='none'" class="btn btn-primary">Cancel</button>
                                             </div>
                                         </div>
                                     </form>
@@ -2798,8 +2803,8 @@ if (isset($_GET["action"])) {
     }
     //Fetching Precious Fees Due Dates Start
     if ($_GET["action"] == "fetch_student_list_details") {
-        $course_id = $_POST["course_id"];
-        $academic_year = $_POST["academic_year"];
+     echo   $course_id = $_POST["course_id"];
+     echo   $academic_year = $_POST["academic_year"];
         if ($academic_year != 0) {
         ?>
             <div class="card">
@@ -3257,7 +3262,7 @@ if (isset($_GET["action"])) {
                                                     <div class="col-md-3">
                                                         <div class="form-group">
                                                             <label>Image</label>
-                                                            <img src="images/student_images/<?php echo $row["admission_profile_image"]; ?>" style="height:100%">
+                                                            <img class="profile-user-img " src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($row["admission_profile_image"]) . '" ' ?> alt="Student profile picture">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -3406,13 +3411,36 @@ if (isset($_GET["action"])) {
     // Student fee start
     if ($_GET["action"] == "fetch_student_fee_details") {
         $studentRegistrationNo = $_POST["studentRegistrationNo"];
-        if (!empty($studentRegistrationNo)) {
-            $sql = "SELECT *
-                        FROM `tbl_admission`
-                        INNER JOIN `tbl_university_details` ON `tbl_admission`.`admission_session` = `tbl_university_details`.`university_details_id`
-                        INNER JOIN `tbl_course` ON `tbl_admission`.`admission_course_name` = `tbl_course`.`course_id`
-                        WHERE `tbl_admission`.`admission_id` = '$studentRegistrationNo' && `tbl_admission`.`status` = '$visible' && `tbl_course`.`status` = '$visible' && `tbl_university_details`.`status` = '$visible'
-                        ";
+    //  getting the session id
+    //  $session_qury = "SELECT * FROM `tbl_admission` WHERE `admission_id`='$studentRegistrationNo'";
+    //  $result_session = mysqli_query($con, $session_qury);
+    //  $session_data = mysqli_fetch_array($result_session);
+    //  $admission_sesssion = trim($session_data['admission_session']);
+    //  $course_name = trim($session_data['admission_course_name']);
+    //  // checking the condition admission session
+    //  if ($admission_sesssion == '01/04/2021-31/03/'.date('Y', strtotime('+3 year'))) {
+    //      $admission_sesssion = 3;
+    //  } elseif ($admission_sesssion == '01/04/2021-31/03/'.date('Y', strtotime('+2 year'))) {
+    //      $admission_sesssion = 2;
+    //  } else {
+    //      $admission_sesssion = 4;
+    //  }
+    // //  getting the session id
+    // $course_id_query = "SELECT * FROM `tbl_course` WHERE `course_name`='$course_name' ";
+    //  $course_id_result = mysqli_query($con, $course_id_query);
+    //  $course_data = mysqli_fetch_array($course_id_result);
+    //  $course_id_data = $course_data['course_id'];
+
+     if (!empty($studentRegistrationNo)) {
+
+
+          $sql =  "SELECT *
+          FROM `tbl_admission`
+          INNER JOIN `tbl_university_details` ON `tbl_admission`.`admission_session` = `tbl_university_details`.`university_details_id`
+          INNER JOIN `tbl_course` ON `tbl_admission`.`admission_course_name` = `tbl_course`.`course_id`
+          WHERE `tbl_admission`.`admission_id` = '$studentRegistrationNo' && `tbl_admission`.`status` = '$visible' && `tbl_course`.`status` = '$visible' && `tbl_university_details`.`status` = '$visible'
+          ";
+
             $result = $con->query($sql);
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
@@ -3434,15 +3462,15 @@ if (isset($_GET["action"])) {
                 $objTblFee = "";
                 //Checking If Hostel If Available Or Not
                 if (strtolower($row["admission_hostel"]) == "yes")
-                    $sqlTblFee = "SELECT *
-                                     FROM `tbl_fee`
-                                     WHERE `status` = '$visible' AND `course_id` = '" . $row["admission_course_name"] . "' AND `fee_academic_year` = '" . $row["admission_session"] . "' ORDER BY `fee_particulars` ASC
-                                     ";
+                $sqlTblFee = "SELECT *
+                FROM `tbl_fee`
+                WHERE `status` = '$visible' AND `course_id` = '".$row["admission_course_name"]."' AND `fee_academic_year` = '".$row["admission_session"]."' ORDER BY `fee_particulars` ASC
+                ";
                 else
-                    $sqlTblFee = "SELECT *
-                                     FROM `tbl_fee`
-                                     WHERE `status` = '$visible' AND `course_id` = '" . $row["admission_course_name"] . "' AND `fee_academic_year` = '" . $row["admission_session"] . "' AND `fee_particulars` NOT IN ('Caution fee','CAUTION FEE','Caution Fee','Caution fee','HOSTEL FEE', 'hostel fee', 'Hostel Fee', 'HOSTELS FEES', 'hostels fees', 'Hostels Fees', 'HOSTELS FEE', 'hostels fee', 'Hostels Fee', 'HOSTEL FEES', 'hostel fees', 'Hostel Fees', '1st Year Hostel Fee', '1ST YEAR HOSTEL FEE', '2nd Year Hostel Fee', '2ND YEAR HOSTEL FEE', '3rd Year Hostel Fee', '3RD YEAR HOSTEL FEE', '4th Year Hostel Fee', '4TH YEAR HOSTEL FEE', '5th Year Hostel Fee', '5TH YEAR HOSTEL FEE', '6th Year Hostel Fee', '6TH YEAR HOSTEL FEE') ORDER BY `fee_particulars` ASC
-                                     ";
+             $sqlTblFee = "SELECT *
+                FROM `tbl_fee`
+                WHERE `status` = '$visible' AND `course_id` = '".$row["admission_course_name"]."' AND `fee_academic_year` = '".$row["admission_session"]."' AND `fee_particulars` NOT IN ('Caution fee','CAUTION FEE','Caution Fee','Caution fee','HOSTEL FEE', 'hostel fee', 'Hostel Fee', 'HOSTELS FEES', 'hostels fees', 'Hostels Fees', 'HOSTELS FEE', 'hostels fee', 'Hostels Fee', 'HOSTEL FEES', 'hostel fees', 'Hostel Fees', '1st Year Hostel Fee', '1ST YEAR HOSTEL FEE', '2nd Year Hostel Fee', '2ND YEAR HOSTEL FEE', '3rd Year Hostel Fee', '3RD YEAR HOSTEL FEE', '4th Year Hostel Fee', '4TH YEAR HOSTEL FEE', '5th Year Hostel Fee', '5TH YEAR HOSTEL FEE', '6th Year Hostel Fee', '6TH YEAR HOSTEL FEE') ORDER BY `fee_particulars` ASC
+                ";
                 $resultTblFee = $con->query($sqlTblFee);
                 if ($resultTblFee->num_rows > 0)
                     while ($rowTblFee = $resultTblFee->fetch_assoc()) {
@@ -3468,9 +3496,9 @@ if (isset($_GET["action"])) {
                         array_push($arrayTblFee, $completeArray);
                     }
                 $arrayTblFee = json_decode(json_encode($arrayTblFee));
-                $sqlTblFeePaid = "SELECT *
+              +  $sqlTblFeePaid = "SELECT *
                                      FROM `tbl_fee_paid`
-                                     WHERE `status` = '$visible' AND `student_id` = '" . $studentRegistrationNo . "' AND `payment_status` IN ('cleared', 'pending')
+                                     WHERE `status` = '$visible' AND `student_id` = '$studentRegistrationNo' AND `payment_status` IN ('cleared', 'pending')
                                      ";
                 $resultTblFeePaid = $con->query($sqlTblFeePaid);
                 if ($resultTblFeePaid->num_rows > 0)
@@ -3505,8 +3533,9 @@ if (isset($_GET["action"])) {
                                     <?php
                                     if (!empty($row["admission_profile_image"])) {
                                     ?>
-                                        <img class="profile-user-img " src="images/student_images/<?php echo $row["admission_profile_image"]; ?>" alt="Student profile picture">
-                                    <?php
+                                            <img class="profile-user-img " src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($row["admission_profile_image"]) . '" ' ?> alt="Student profile picture">
+
+<?php
                                     } else if (strtolower($row["admission_gender"]) == "female") {
                                     ?>
                                         <img class="profile-user-img img-fluid img-circle" src="images/womenIcon.png" alt="Student profile picture">
@@ -3515,7 +3544,7 @@ if (isset($_GET["action"])) {
                                     <?php } ?>
                                 </div>
 
-                                <h3 class="profile-username text-center"><?php echo $row["admission_first_name"] . " " . $row["admission_last_name"]; ?></h3>
+                                <h3 class="profile-username text-center"><?php echo $row["admission_first_name"]; ?></h3>
                                 <?php
                                 $completeSessionStart = explode("-", $row["university_details_academic_start_date"]);
                                 $completeSessionEnd = explode("-", $row["university_details_academic_end_date"]);
@@ -5584,7 +5613,7 @@ if (isset($_GET["action"])) {
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $nameFull = explode(" ", $row["prospectus_applicant_name"]);
-                $completeInfo[] = $nameFull[0];
+                $completeInfo[] = $row["prospectus_applicant_name"];
                 if (isset($nameFull[1]))
                     $completeInfo[] = $nameFull[1];
                 else
@@ -5599,8 +5628,20 @@ if (isset($_GET["action"])) {
                 $completeInfo[] = $row["prospectus_emailid"];
                 $completeInfo[] = $row["prospectus_dob"];
                 $completeInfo[] = $row["mobile"];
+                if(strlen($row["prospectus_course_name"])>2){
+                    $prospectus_course_name=$row["prospectus_course_name"];
+                    $course_no_query = "SELECT * FROM `tbl_course` WHERE `course_name`='$prospectus_course_name'";
+                    $course_no_result = mysqli_query($con, $course_no_query);
+                    $data_row1 = mysqli_fetch_array($course_no_result);
+                    $prospectus_course_id = $data_row1['course_duration'];
+                    $prospectus_session_id = $data_row1['course_id'];
+
+                    $completeInfo[] = $prospectus_session_id;
+                    $completeInfo[] = $prospectus_course_id;
+                }else{
                 $completeInfo[] = $row["prospectus_course_name"];
                 $completeInfo[] = $row["prospectus_session"];
+                }
                 $completeInfo[] = $row["prospectus_mother_name"];
                 $info = implode("|||", $completeInfo);
                 echo $info;
@@ -7808,6 +7849,7 @@ if (isset($_GET["action"])) {
                     <th>Phone No</th>
                     <th>Referred By</th>
                     <th>Payment Status</th>
+                    <th>Payment Mode</th>
                     <th>Timing</th>
                     <th class="project-actions text-center">Action </th>
                 </tr>
@@ -7839,12 +7881,30 @@ if (isset($_GET["action"])) {
                             <td><?php echo $s_no; ?></td>
                             <td style="color:#8a0410;"><b><?php if ($row["prospectus_no"] != "") echo $row["prospectus_no"];
                                                             else echo "Please Give Prospectus No"; ?></b></td>
-                            <td><?php echo $row["prospectus_course_name"] ?></td>
+                              <?php
+                            //   i heve to check prospectus course name value interger or charater
+                                if(strlen($row["prospectus_course_name"])<=2){
+                              $prospectus_course_name=$row["prospectus_course_name"];
+                    $course_no_query = "SELECT * FROM `tbl_course` WHERE `course_id`='$prospectus_course_name'";
+                    $course_no_result = mysqli_query($con, $course_no_query);
+                    $data_row1 = mysqli_fetch_array($course_no_result);
+                    $prospectus_course = $data_row1['course_name'];
+    
+
+                                }
+                                else{
+                                    $prospectus_course = $row["prospectus_course_name"];
+                                }
+                                
+                    ?>
+                           <td><?php echo $prospectus_course  ?></td>
                             <td><?php echo $row["prospectus_applicant_name"] ?></td>
                             <td><?php echo $row["mobile"] ?></td>
                             <td><?php echo $row["revert_by"] ?></td>
                             <td><?php echo $row["payment_status"] ?></td>
+                            <td><?php echo $row["prospectus_payment_mode"] ?></td>
                             <td><?php echo $row["post_at"] ?></td>
+
                             <td class="project-actions text-center">
                                 <button class="btn btn-info btn-sm" onclick="document.getElementById('view_university_prospectus_enquiry<?php echo $row['id']; ?>').style.display='block'">
                                     <i class="fas fa-eye">
@@ -7872,15 +7932,22 @@ if (isset($_GET["action"])) {
                                                     <div class="form-group">
                                                         <label>Prospectus No</label>
                                                         <div class="input-group mb-3">
-                                                            <input type="text" id="unversity_prospectus_number<?php echo $row["id"] ?>" name="unversity_prospectus_number" class="form-control" value="<?php echo $row["prospectus_no"] ?>">
+                                                            <?php $_SESSION['prospectus_emailid']=$row['prospectus_emailid'];
+                                                            $_SESSION['prospectus_session']=$row['prospectus_session']; 
+                                                            $_SESSION['prospectus_applicant_name']=$row['prospectus_applicant_name'];
+                                                             ?>
+                                                            <input readonly type="text" id="unversity_prospectus_number<?php echo $row["id"] ?>" name="unversity_prospectus_number" class="form-control" value="<?php echo $row["prospectus_no"] ?>">
                                                             <input type="hidden" id="prospectus_session<?php echo $row["id"] ?>" name="prospectus_session" class="form-control" value="<?php echo $row["prospectus_session"] ?>">
                                                             <input type="hidden" id="prospectus_course_name<?php echo $row["id"] ?>" name="prospectus_course_name" class="form-control" value="<?php echo $row["prospectus_course_name"] ?>">
-                                                            <input type="hidden" id="prospectus_rate<?php echo $row["id"] ?>" name="prospectus_rate" class="form-control" value="<?php echo $row["prospectus_rate"] ?>">
+                                                            <input type="hidden" id="prospectus_rate<?php echo $row["id"] ?>" name="prospectus_rate" class="form-control" value="<?php echo $row["prospectus_emailid"] ?>">
                                                             <input type="hidden" id="post_at<?php echo $row["id"] ?>" name="post_at" class="form-control" value="<?php echo $row["post_at"] ?>">
                                                             <input type="hidden" id="unversity_prospectus_id<?php echo $row["id"] ?>" name="unversity_prospectus_id" class="form-control" value="<?php echo $row["id"] ?>">
                                                             <input type="hidden" id="action_prospectus_enquiry<?php echo $row["id"] ?>" name="action" class="form-control" value="update_prospectus_enquiry">
                                                             <div class="input-group-prepend">
-                                                                <button id="update_prospectus<?php echo $row["id"] ?>" type="button" class="btn btn-info"><span id="update_loader_section<?php echo $row["id"] ?>"></span>Update</button>
+                                                             <button id="update_prospectus<?php 
+                                                            echo $row["id"] ?>" type="button" class="btn btn-info"><span id="update_loader_section<?php 
+                                                          echo $row["id"] ?>"></span>Update</button>     
+                                                         
                                                             </div>
 
                                                         </div>
@@ -8198,7 +8265,7 @@ if (isset($_GET["action"])) {
     //Nsuniv Prospectus Enquiry End
     //Nsuniv Get Started Enquiry Start
     if ($_GET["action"] == "get_nsuniv-admission-enquiry") {
-        $objectSecond->update("tbl_alert", "`get_started_enquiry` = '0' WHERE `id`='1'");
+        $objectSecond->update("tbl_alert", "`tbl_prospectus` = '0' WHERE `id`='1'");
         $objectSecond->sql = "";
     ?>
         <table id="example1" class="table table-bordered table-striped">
@@ -8209,35 +8276,76 @@ if (isset($_GET["action"])) {
                     <th>Applicant Name</th>
                     <th>Email</th>
                     <th>Phone No</th>
-                    <th>Referred By</th>
+                    <th>Session</th>
                     <th>State</th>
                     <th>City</th>
-                    <th>Last Qualification</th>
-                    <th>Timing</th>
-                    <th class="project-actions text-center">Action </th>
+                    <th>Gender</th>
+                    <th>Admission District</th>
+                    <th colspan="3"  class="project-actions text-center">Action </th>
+                  
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $objectDefault->select("admission_enquiry_tbl");
-                $objectDefault->where("`is_deleted` = '0' ORDER BY `id` DESC");
-                $result = $objectDefault->get();
-                if ($result->num_rows > 0) {
-                    while ($row = $objectDefault->get_row()) {
+                
+                $admission_query="SELECT * FROM `tbl_admission` WHERE `stud_status`='1'";
+                $admission_result=$con->query($admission_query);
+
+                // $objectSecond->select("tbl_admission");
+                // $objectSecond->where("ORDER BY `id` DESC");
+                // $result = $objectSecond->get();
+                if ($admission_result) {
+                    while ($row = $admission_result->fetch_assoc()) {
                 ?>
                         <tr>
                             <td><?php echo $s_no; ?></td>
-                            <td><?php echo $row["admission_course"] ?></td>
-                            <td><?php echo $row["admission_name"] ?></td>
-                            <td><?php echo $row["admission_email"] ?></td>
-                            <td><?php echo $row["admission_phone"] ?></td>
-                            <td><?php echo $row["revert_by"] ?></td>
+                            <?php
+                            //   i heve to check prospectus course name value interger or charater
+                            
+                              $prospectus_course_name=$row["admission_course_name"];
+                    $course_no_query = "SELECT * FROM `tbl_course` WHERE `course_id`='$prospectus_course_name'";
+                    $course_no_result = mysqli_query($con, $course_no_query);
+                    $data_row1 = mysqli_fetch_array($course_no_result);
+                    $prospectus_course = $data_row1['course_name'];
+                    $course_session = $data_row1['course_duration'];
+if($course_session==2){
+    $course_session=date('Y').'-'.date('Y',strtotime('+2 year'));
+}
+elseif($course_session==3){
+ $course_session=date('Y').'-'.date('Y',strtotime('+3 year'));
+}
+else{
+    $course_session=date('Y').'-'.date('Y',strtotime('+4 year'));
+
+}
+                                
+                    ?>
+                           <td><?php echo $prospectus_course  ?></td>
+            
+                            <td><?php echo $row["admission_title"]; echo " "; echo $row['admission_first_name'];?></td>
+                            <td><?php echo $row["admission_emailid_student"] ?></td>
+                            <td><?php echo $row["admission_mobile_student"] ?></td>
+                            <td><?php echo $course_session ?></td>
                             <td><?php echo $row["admission_state"] ?></td>
                             <td><?php echo $row["admission_city"] ?></td>
-                            <td><?php echo $row["admission_last_qualify"] ?></td>
-                            <td><?php echo $row["time"] ?></td>
-                            <td class="project-actions text-center">
-                                <button class="btn btn-danger btn-sm" onclick="document.getElementById('delete_university_get_enquiry<?php echo $row["id"]; ?>').style.display='block'">
+                            <td><?php echo $row["admission_gender"] ?></td>
+                            <td><?php echo $row["admission_district"] ?></td>
+                                <td  class="project-actions text-center">
+                                <a href="admission_form_view?edit=<?php echo $row["admission_id"];  ?>"  class="btn btn-secondary btn-sm" >
+                                    <i class="fas fa-eye">
+                                    </i>
+                                    View
+                                </a>
+                                </td>
+                                <td  class="project-actions text-center">
+                                <a href="admission_form_update?edit=<?php echo $row["admission_id"];  ?>" class="btn btn-warning btn-sm" >
+                                    <i class="fas fa-edit">
+                                    </i>
+                                   Update
+                                   </a>
+                                   </td>
+                                   <td>
+                                <button class="btn btn-danger btn-sm" onclick="document.getElementById('delete_university_get_enquiry<?php echo $row['id']; ?>').style.display='block'">
                                     <i class="fas fa-trash">
                                     </i>
                                     Delete
@@ -8937,19 +9045,23 @@ if (isset($_GET["action"])) {
                 $result = $con->query($sql);
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
+ $id_data=seesion_coursse_id($row['admission_id']);
+echo $course_id_data=$id_data['course_id'];
+echo $admission_session=$id_data['session_id'];
+                     
                 ?>
                         <tr>
                             <td><?php echo $s_no; ?></td>
                             <?php
                             $sql_course = "SELECT * FROM `tbl_course`
-                                                       WHERE `status` = '$visible' && `course_id` = '" . $row["admission_course_name"] . "';
+                                                       WHERE `status` = '$visible' && `course_id` = '".$row["admission_course_name"]."';
                                                        ";
                             $result_course = $con->query($sql_course);
                             $row_course = $result_course->fetch_assoc();
                             ?>
                             <td><?php echo $row["admission_id"] ?></td>
                             <td><?php echo $row_course["course_name"] ?></td>
-                            <td><?php echo $row["admission_first_name"] ?> <?php echo $row["admission_middle_name"] ?> <?php echo $row["admission_last_name"] ?></td>
+                            <td><?php echo $row["admission_first_name"] ?></td>
                             <td>
                                 <table>
                                     <thead>
@@ -8980,16 +9092,18 @@ if (isset($_GET["action"])) {
                                         $arrayPerticular = array();
                                         $arrayTblFee = array();
                                         $objTblFee = "";
+
                                         //Checking If Hostel If Available Or Not
+                                      
                                         if (strtolower($row["admission_hostel"]) == "yes")
                                             $sqlTblFee = "SELECT *
                                                                  FROM `tbl_fee`
-                                                                 WHERE `status` = '$visible' AND `course_id` = '" . $row["admission_course_name"] . "' AND `fee_academic_year` = '" . $row["admission_session"] . "' ORDER BY `fee_particulars` ASC
+                                                                 WHERE `status` = '$visible' AND `course_id` = '".$row["admission_course_name"]."' AND `fee_academic_year` = '".$row["admission_session"]."' ORDER BY `fee_particulars` ASC
                                                                  ";
                                         else
-                                            $sqlTblFee = "SELECT *
+                                         $sqlTblFee = "SELECT *
                                                                  FROM `tbl_fee`
-                                                                 WHERE `status` = '$visible' AND `course_id` = '" . $row["admission_course_name"] . "' AND `fee_academic_year` = '" . $row["admission_session"] . "' AND `fee_particulars` NOT IN ('HOSTEL FEE', 'hostel fee', 'Hostel Fee', 'HOSTELS FEES', 'hostels fees', 'Hostels Fees', 'HOSTELS FEE', 'hostels fee', 'Hostels Fee', 'HOSTEL FEES', 'hostel fees', 'Hostel Fees', '1st Year Hostel Fee', '1ST YEAR HOSTEL FEE', '2nd Year Hostel Fee', '2ND YEAR HOSTEL FEE', '3rd Year Hostel Fee', '3RD YEAR HOSTEL FEE', '4th Year Hostel Fee', '4TH YEAR HOSTEL FEE', '5th Year Hostel Fee', '5TH YEAR HOSTEL FEE', '6th Year Hostel Fee', '6TH YEAR HOSTEL FEE') ORDER BY `fee_particulars` ASC
+                                                                 WHERE `status` = '$visible' AND `course_id` = '".$row["admission_course_name"]."' AND `fee_academic_year` = '".$row["admission_session"]."' AND `fee_particulars` NOT IN ('HOSTEL FEE', 'hostel fee', 'Hostel Fee', 'HOSTELS FEES', 'hostels fees', 'Hostels Fees', 'HOSTELS FEE', 'hostels fee', 'Hostels Fee', 'HOSTEL FEES', 'hostel fees', 'Hostel Fees', '1st Year Hostel Fee', '1ST YEAR HOSTEL FEE', '2nd Year Hostel Fee', '2ND YEAR HOSTEL FEE', '3rd Year Hostel Fee', '3RD YEAR HOSTEL FEE', '4th Year Hostel Fee', '4TH YEAR HOSTEL FEE', '5th Year Hostel Fee', '5TH YEAR HOSTEL FEE', '6th Year Hostel Fee', '6TH YEAR HOSTEL FEE') ORDER BY `fee_particulars` ASC
                                                                  ";
                                         $resultTblFee = $con->query($sqlTblFee);
                                         if ($resultTblFee->num_rows > 0)
@@ -9069,7 +9183,7 @@ if (isset($_GET["action"])) {
                                                     <?php
                                                     $sqlTblFeeStatus = "SELECT *
                                                                                          FROM `tbl_fee_status`
-                                                                                         WHERE `particular_id` = '" . $arrayTblFeeUpdate->fee_id . "' AND `admission_id` = '" . $row["admission_id"] . "' AND `course_id` = '" . $row["admission_course_name"] . "' AND `academic_year` = '" . $row["admission_session"] . "'
+                                                                                         WHERE `particular_id` = '" . $arrayTblFeeUpdate->fee_id . "' AND `admission_id` = '" . $row["admission_id"] . "' AND `course_id` = '".$row["admission_course_name"]."' AND `academic_year` = '".$row["admission_session"]."'
                                                                                          ";
                                                     $resultTblFeeStatus = $con->query($sqlTblFeeStatus);
                                                     if ($resultTblFeeStatus->num_rows > 0) {

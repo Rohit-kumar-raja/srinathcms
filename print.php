@@ -1,3 +1,4 @@
+
 <?php
 include './Backend/connection.inc.php';
 include './Backend/function.inc.php';
@@ -45,7 +46,7 @@ if (isset($_SESSION['email']) && $_SESSION['email'] != '') {
     $post_at = $row['post_at'];
     $type = $row['type'];
     $easebuzz_id = $row['easebuzz_id'];
-    $transaction_id = $row['transaction_id'];
+    $transaction_id = $row['transaction_no'];
     $status = $row['status'];
 
 ?>
@@ -69,6 +70,7 @@ if (isset($_SESSION['email']) && $_SESSION['email'] != '') {
         <!-- END Page Level CSS-->
         <!-- BEGIN Custom CSS-->
         <link rel="stylesheet" type="text/css" href="app-assets/css/custom/custom.css">
+        <link rel="stylesheet" href="./asset/css//print.css">
         <!-- END Custom CSS-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -108,15 +110,17 @@ if (isset($_SESSION['email']) && $_SESSION['email'] != '') {
                                 <!-- invoice view page -->
                                 <div class="col l10 m8 s12">
                                 </div>
-                                <!-- <div class="col l2 m4 s12">
-                                    <div class="card invoice-action-wrapper">
-                                        <div class="card-content">
-                                            <div class="invoice-action-btn">
-                                                <a href="javascript:void(0);" onclick="printPageArea('prinprint_pdf_file')">Print</a>
+                                <?php if ($payment_status == 'success') { ?>
+                                    <div id="printid" class="col l2 m4 s12">
+                                        <div class="card invoice-action-wrapper">
+                                            <div class="card-content">
+                                                <div class="invoice-action-btn">
+                                                    <a href="" onclick="printdata()"> <button id="printbutton" onclick="print()" class="btn btn-success"> <span>Print</span> </button> </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                <?php } ?>
                                 <div class="col l12 ">
                                     <div class="card">
                                         <div class="card-content invoice-print-area" id="print_pdf_file">
@@ -128,11 +132,11 @@ if (isset($_SESSION['email']) && $_SESSION['email'] != '') {
                                                         </div>
                                                     </nav>
 
-                                                    <h6>Online Prospectus Form</h6>
+                                                    <h6 class="printhead">Online Prospectus Form</h6>
                                                 </div><br><br>
                                                 <div class="row">
                                                     <div class="col l12">
-                                                        <strong> Prospectus No : <?php $prospectus_no; ?></strong>
+                                                        <strong> Prospectus No : <?php echo $prospectus_no; ?></strong>
                                                     </div>
                                                 </div>
                                                 <div class="invoice-product-details">
@@ -354,5 +358,7 @@ if (isset($_SESSION['email']) && $_SESSION['email'] != '') {
         WinPrint.focus();
         WinPrint.print();
         WinPrint.close();
+
+       
     }
 </script>

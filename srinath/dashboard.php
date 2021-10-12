@@ -102,7 +102,7 @@
                                 <div class="icon">
                                     <i class="ion ion-bag"></i>
                                 </div>
-                                <a href="prospectus_view" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="nsuniv-prospectus-enquiry" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                        <div class="col-lg-3 col-6">
@@ -165,7 +165,7 @@
                                 <div class="icon">
                                     <i class="ion ion-stats-bars"></i>
                                 </div>
-                                <a href="print_receipt" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                <a href="income" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>

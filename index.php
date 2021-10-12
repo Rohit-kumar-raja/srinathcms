@@ -109,7 +109,7 @@ if (isset($_POST['done'])) {
 
             <ul class="right">
                 <div class="nav-btn d-sm-none d-md-none d-lg-inline-block">
-                    <a href="http://srinathuniversity.in/" target="blank">Back To Home </a>
+                    <a href="admission.php" target="blank">Admission <?php echo date('Y') ?></a>
                 </div>
             </ul>
         </div>

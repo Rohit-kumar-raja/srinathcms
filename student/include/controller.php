@@ -22,7 +22,7 @@
 		        //Login Section Start With Ajax
         if($_POST["action"] == "student_login"){
             $student_login_username = $_POST["student_login_username"];
-            $student_login_password = $_POST["student_login_password"];
+            $student_login_password = md5($_POST["student_login_password"]);
             if(!empty($student_login_username && $student_login_password)){
                 $sql = "SELECT * FROM `tbl_admission`
                         WHERE `admission_username` = '$student_login_username' && `admission_password` = '$student_login_password'
@@ -32,7 +32,7 @@
                     //$_SESSION["logger_type1"] = "student";
                     $_SESSION["logger_username1"] = $student_login_username;
                     $_SESSION["logger_password1"] = $student_login_password;
-                    $_SESSION["logger_time1"] = time();
+                    $_SESSION["logger_time1"] =time();
                     echo '
                         <div class="alert alert-success alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -157,9 +157,9 @@
 			$message=$_POST['message'];
  
 				  $sql = "INSERT INTO `tbl_complaint`
-                            (`complaint_id`, `admission_id`,`subject`, `message`,`create_time` ,`status`) 
+                            (`admission_id`,`subject`, `message`,`create_time` ,`status`) 
                             VALUES 
-                            ('$complaint_id','$admission_id','$subject','$message','$date_variable_today_month_year_with_timing','$visible')
+                            ('$admission_id','$subject','$message','$date_variable_today_month_year_with_timing','$visible')
                             ";							
 				  if($con->query($sql)){
                         echo "<script>

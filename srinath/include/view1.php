@@ -4819,12 +4819,12 @@ $(document).ready(function(){
                                                                             $rowTblFeeStatus = $resultTblFeeStatus->fetch_assoc();
                                                                             if(strtolower($rowTblFeeStatus["fee_status"]) == "dues"){
                                                                             ?>
-                                                                            <td> <button type="button" id="edit_examfee_status_button<?= $row_fee['exfee_id']."_".$s_no ?>" class="btn btn-warning btn-sm"><span id="loader_id<?= $row_fee->exfee_id."_".$s_no ?>"></span> Dues</button></td>
+                                                                            <td> <button type="button" id="edit_examfee_status_button<?= $row_fee['exfee_id']."_".$s_no ?>" class="btn btn-warning btn-sm"><span id="loader_id<?=  $row_fee['exfee_id']."_".$s_no ?>"></span> Dues</button></td>
                                                                             <!--<td><button type="button" class="btn btn-danger"><?= $rowTblFeeStatus["fee_status"] ?></button></td>-->
                                                                             <?php 
                                                                             } else{
                                                                                 ?>
-                                                                            <td> <button type="button" id="edit_examfee_status_button<?= $row_fee['exfee_id']."_".$s_no ?>" class="btn btn-primary btn-sm"><span id="loader_id<?= $row_fee->exfee_id."_".$s_no ?>"></span> No Dues</button></td>
+                                                                            <td> <button type="button" id="edit_examfee_status_button<?= $row_fee['exfee_id']."_".$s_no ?>" class="btn btn-primary btn-sm"><span id="loader_id<?=  $row_fee['exfee_id']."_".$s_no ?>"></span> No Dues</button></td>
                                                                             <?php 
                                                                             }
                                                                         } else{
@@ -8419,9 +8419,12 @@ $(document).ready(function(){
             </script>
         <?php
         }
+        ?>
         //Nsuniv Notification End
-        /* ---------- All Fetch Codes End ------------------------ */
-        <input class="form-control" id="myInput" type="text" placeholder="Search..">
+        /* ---------- All Fetch Codes End ------------------------ */ 
+
+        <input class="form-control" id="myInput" type="text" placeholder="Search.." >
+        <?php
      //Fetching course & year wise fee report Start
         if($_GET["action"] == "fetch_fee_list_details"){
             $course_id = $_POST["course_id"];

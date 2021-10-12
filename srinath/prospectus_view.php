@@ -1,7 +1,7 @@
-<?php 
-    $page_no = "4";
-    $page_no_inside = "4_1";
-    include "include/authentication.php"; 
+<?php
+$page_no = "4";
+$page_no_inside = "4_1";
+include "include/authentication.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,7 +63,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body" id="data_table">
-                                
+
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -83,6 +83,17 @@
         </aside>
         <!-- /.control-sidebar -->
     </div>
+    <?php
+    include '../srinath/include/config.php';
+    $getmaxid = "SELECT MAX(prospectus_no) as id FROM `tbl_prospectus`";
+    $getmaxid_result = mysqli_query($con, $getmaxid);
+    $getmaxid_data = mysqli_fetch_array($getmaxid_result);
+    $prosprectus_number = $getmaxid_data['id'];
+    $prosprectus_number = explode('/', $prosprectus_number)[2] + 1;
+
+      $add_prospectus_no =  'SU/P/' . $prosprectus_number;
+
+    ?>
     <!-- ./wrapper -->
     <!-- Add prospectus Modal Start-->
     <div id="add_prospectus" class="w3-modal" style="z-index:2020;">
@@ -94,179 +105,183 @@
             <form id="add_prospectus_form" role="form" method="POST">
                 <div class="card-body">
                     <div class="col-md-12" id="error_section"></div>
-                        <div class="row">
-						  <div class="col-md-12" id="error_section"></div>
-							<div class="col-4">
-							  <label>Prospectus No.</label>
-							  <input type="text" id="add_prospectus_no" name="add_prospectus_no" class="form-control" required>
-							</div>
-							
-							<div class="col-4">
-							  <label>Applicant Name</label>
-							  <input type="text" id="add_prospectus_applicant_name" name="add_prospectus_applicant_name" class="form-control" required>  
-							</div>
-							
-							<div class="col-4">
-							  <label>Gender</label>
-							  <select id="add_prospectus_gender" name="add_prospectus_gender" class="form-control">  
-							  <option value="0">Select</option>	
-							  <option value="Male">Male</option>
-							  <option value="Female">Female</option>				  
-							  </select>				  
-							</div>               
-						  
-							<div class="col-4">
-							  <label>Father Name</label>
-							   <input type="text" id="add_prospectus_father_name" name="add_prospectus_father_name" class="form-control">  
-							</div>
-                            <div class="col-4">
-							  <label>Mother Name</label>
-							   <input type="text" id="add_prospectus_mother_name" name="add_prospectus_mother_name" class="form-control">  
-							</div>
-						    
-							<div class="col-4">
-							  <label>Address</label>
-							  <textarea id="add_prospectus_address" name="add_prospectus_address" class="form-control" style="height:38px;"></textarea>  
-							</div>
-							<div class="col-4">
-							  <label>Country</label>
-							  <select id="add_prospectus_country" name="add_prospectus_country" class="form-control">  
-							  <option value="India">India</option>					  
-							  </select>	 
-						  </div>
-							<div class="col-4"> 
-							  <label>State</label>
-							  <input type="text" id="add_prospectus_state" name="add_prospectus_state" class="form-control" required>  
-							 <!-- <select id="add_prospectus_state" name="add_prospectus_state"  class="form-control" >-->
-								<!--<option value="0">Select State</option>-->
-								<!--<option value="Jharkhand">Jharkhand</option>-->
-								<!--</select>				  -->
-							</div>                         			  				  
-							<div class="col-4">   
-							 <label>City</label>
-							 <input type="text" id="add_prospectus_city" name="add_prospectus_city" class="form-control" required>  
-							<!--<select id="add_prospectus_city" name="add_prospectus_city"  class="form-control" >-->
-							<!--	<option value="0">Select City</option>					-->
-							<!--	<option value="Jamshedpur">Jamshedpur</option>-->
-							<!--	<option value="Ranchi">Ranchi</option>-->
-							<!--	</select>-->
-								</div>                           
-						  
-						  <div class="col-4">
-							  <label>Postal Code</label>
-							  <input type="text" id="add_prospectus_postal_code" name="add_prospectus_postal_code" class="form-control" >  
-							</div>
-						   <div class="col-4">   
-							 <label>Email ID</label>
-							  <input type="email" id="add_prospectus_emailid" name="add_prospectus_emailid" class="form-control" required>				
-							</div>                           
-						  
-						  <div class="col-4">
-							  <label>DOB</label>
-							  <input type="date" id="add_prospectus_dob" name="add_prospectus_dob" class="form-control" required>  
-							</div>
-							<div class="col-4">  
-							 <label>Mobile No</label>
-							  <input type="text" id="mobile" name="mobile" class="form-control" required>				              
-						  </div>
-						  
-							<div class="col-4">
-							  <label>Course</label>
-							  <select id="add_prospectus_course_name" name="add_prospectus_course_name" class="form-control" onchange="showdesg(this.value)">
-									<option value="0">Select Course</option>
-									<?php 
-									$sql="select * from tbl_course";
-									$query=mysqli_query($con,$sql);
-									while($row=mysqli_fetch_array($query)){
-									?>
-									<option value="<?php echo $row['course_id']; ?>"><?php echo $row['course_name']; ?></option>
-									<?php } ?>
-							  </select>  
-							</div>
-							<div class="col-4">
-                                        <div class="form-group">
-                                            <label>Academic Year</label>
-                                            <select class="form-control" name="add_prospectus_session" id="add_prospectus_session">
-                                                <option value="0">Select Academic Year</option>
-                                                <?php 
-                                                    $sql_ac_year = "SELECT * FROM `tbl_university_details`
+                    <div class="row">
+                        <div class="col-md-12" id="error_section"></div>
+                        <div class="col-4">
+                            <label>Prospectus No.</label>
+                            <input readonly type="text" id="add_prospectus_no" name="add_prospectus_no" class="form-control" value="<?php echo $add_prospectus_no ?>" required>
+                        </div>
+
+                        <div class="col-4">
+                            <label>Applicant Name</label>
+                            <input type="text" id="add_prospectus_applicant_name" name="add_prospectus_applicant_name" class="form-control" required>
+                        </div>
+
+                        <div class="col-4">
+                            <label>Gender</label>
+                            <select id="add_prospectus_gender" name="add_prospectus_gender" class="form-control">
+                                <option value="0">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+
+                        <div class="col-4">
+                            <label>Father Name</label>
+                            <input type="text" id="add_prospectus_father_name" name="add_prospectus_father_name" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>Mother Name</label>
+                            <input type="text" id="add_prospectus_mother_name" name="add_prospectus_mother_name" class="form-control">
+                        </div>
+
+                        <div class="col-4">
+                            <label>Address 1</label>
+                            <textarea id="add_prospectus_address" name="add_prospectus_address" class="form-control" style="height:38px;"></textarea>
+                        </div>
+                        <div class="col-4">
+                            <label>Address 2</label>
+                            <textarea id="add_prospectus_address1" name="add_prospectus_address1" class="form-control" style="height:38px;"></textarea>
+                        </div>
+                        <div class="col-4">
+                            <label>Country</label>
+                            <select id="add_prospectus_country" name="add_prospectus_country" class="form-control">
+                                <option value="India">India</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label>State</label>
+                            <input type="text" id="add_prospectus_state" name="add_prospectus_state" class="form-control" required>
+                            <!-- <select id="add_prospectus_state" name="add_prospectus_state"  class="form-control" >-->
+                            <!--<option value="0">Select State</option>-->
+                            <!--<option value="Jharkhand">Jharkhand</option>-->
+                            <!--</select>				  -->
+                        </div>
+                        <div class="col-4">
+                            <label>City</label>
+                            <input type="text" id="add_prospectus_city" name="add_prospectus_city" class="form-control" required>
+                            <!--<select id="add_prospectus_city" name="add_prospectus_city"  class="form-control" >-->
+                            <!--	<option value="0">Select City</option>					-->
+                            <!--	<option value="Jamshedpur">Jamshedpur</option>-->
+                            <!--	<option value="Ranchi">Ranchi</option>-->
+                            <!--	</select>-->
+                        </div>
+
+                        <div class="col-4">
+                            <label>Postal Code</label>
+                            <input type="text" id="add_prospectus_postal_code" name="add_prospectus_postal_code" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <label>Email ID</label>
+                            <input type="email" id="add_prospectus_emailid" name="add_prospectus_emailid" class="form-control" required>
+                        </div>
+
+                        <div class="col-4">
+                            <label>DOB</label>
+                            <input type="date" id="add_prospectus_dob" name="add_prospectus_dob" class="form-control" required>
+                        </div>
+                        <div class="col-4">
+                            <label>Mobile No</label>
+                            <input type="text" id="mobile" name="mobile" class="form-control" required>
+                        </div>
+
+                        <div class="col-4">
+                            <label>Course</label>
+                            <select id="add_prospectus_course_name" name="add_prospectus_course_name" class="form-control" onchange="showdesg(this.value)">
+                                <option value="0">Select Course</option>
+                                <?php
+                                $sql = "select * from tbl_course";
+                                $query = mysqli_query($con, $sql);
+                                while ($row = mysqli_fetch_array($query)) {
+                                ?>
+                                    <option value="<?php echo $row['course_id']; ?>"><?php echo $row['course_name']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label>Academic Year</label>
+                                <select class="form-control" name="add_prospectus_session" id="add_prospectus_session">
+                                    <option value="0">Select Academic Year</option>
+                                    <?php
+                                    $sql_ac_year = "SELECT * FROM `tbl_university_details`
                                                                    WHERE `status` = '$visible';
                                                                    ";
-                                                    $result_ac_year = $con->query($sql_ac_year);
-                                                    while($row_ac_year = $result_ac_year->fetch_assoc()){
-                                                ?>
-                                                <option value="<?php echo $row_ac_year["university_details_id"]; ?>"><?php echo $row_ac_year["university_details_academic_start_date"]." to ".$row_ac_year["university_details_academic_end_date"]; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
+                                    $result_ac_year = $con->query($sql_ac_year);
+                                    while ($row_ac_year = $result_ac_year->fetch_assoc()) {
+                                    ?>
+                                        <option value="<?php echo $row_ac_year["university_details_id"]; ?>"><?php echo $row_ac_year["university_details_academic_start_date"] . " to " . $row_ac_year["university_details_academic_end_date"]; ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
-						   <div class="col-4">  
-							 <label>Prospectus Rate</label>
-							 <select class="form-control" name="add_prospectus_rate" id="add_prospectus_rate" onchange="show(this.value)">
-							 <option>Select</option>
-							 </select>			
-							</div> 
-							<div class="col-4">
-                                                 <label>Payment Mode</label>
-                                                  <div class="form-group">
-                                                      <div class="input-group">
-                                                          <select id="add_prospectus_payment_mode" name="add_prospectus_payment_mode" class="form-control" onchange="PaymentModeSelect(this.value);">
-                                                              <option value="0">Select</option>
-                                                              <option value="Cash">Cash</option>
-                                                              <option value="Cheque">Cheque</option>
-                                                              <option value="DD">DD</option>
-                                                              <option value="Online">Online</option>
-                                                              <option value="NEFT/IMPS/RTGS">NEFT/IMPS/RTGS</option>
-                                                          </select>
-                                                      </div>
-                                                      <!-- /.input group -->
-                                                  </div>
-                                              </div>
-                                              <div class="col-4" id="bankName_div" style="display:none">
-                                                  <label>Bank Name</label>
-                                                  <div class="form-group">
-                                                      <div class="input-group">
-                                                          <input id="add_bank_name" name="add_bank_name" type="text" class="form-control" />
-                                                      </div>
-                                                      <!-- /.input group -->
-                                                  </div>
-                                              </div>
-                                              <div class="col-4" id="chequeNo_div" style="display:none">
-                                                  <label>Cheque/DD/NEFT No</label>
-                                                  <div class="form-group">
-                                                      <div class="input-group">
-                                                          <input id="add_transaction_no" name="add_transaction_no" type="text" class="form-control" />
-                                                      </div>
-                                                      <!-- /.input group -->
-                                                  </div>
-                                              </div>
-                                              <div class="col-4" id="cashDepositTo_div" style="display:none">
-                                                  <label>Cash Deposit To</label>
-                                                  <div class="form-group">
-                                                      <div class="input-group">
-                                                          <select id="cashDepositTo" name="cashDepositTo" class="form-control">
-                                                              <option value="0">Select</option>
-                                                              <option value="University Office">University Office</option>
-                                                              <option value="Deposit to Bank">Deposit to Bank</option>
-                                                              <option value="City Office">City Office</option>
-                                                          </select>
-                                                      </div>
-                                                      <!-- /.input group -->
-                                                  </div>
-                                              </div>
+                        </div>
+                        <div class="col-4">
+                            <label>Prospectus Rate</label>
+                            <select class="form-control" name="add_prospectus_rate" id="add_prospectus_rate" onchange="show(this.value)">
+                                <option>Select</option>
+                            </select>
+                        </div>
+                        <div class="col-4">
+                            <label>Payment Mode</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select id="add_prospectus_payment_mode" name="add_prospectus_payment_mode" class="form-control" onchange="PaymentModeSelect(this.value);">
+                                        <option value="0">Select</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Cheque">Cheque</option>
+                                        <option value="DD">DD</option>
+                                        <option value="Online">Online</option>
+                                        <option value="NEFT/IMPS/RTGS">NEFT/IMPS/RTGS</option>
+                                    </select>
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-4" id="bankName_div" style="display:none">
+                            <label>Bank Name</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="add_bank_name" name="add_bank_name" type="text" class="form-control" />
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-4" id="chequeNo_div" style="display:none">
+                            <label>Cheque/DD/NEFT No</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="add_transaction_no" name="add_transaction_no" type="text" class="form-control" />
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+                        <div class="col-4" id="cashDepositTo_div" style="display:none">
+                            <label>Cash Deposit To</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <select id="cashDepositTo" name="cashDepositTo" class="form-control">
+                                        <option value="0">Select</option>
+                                        <option value="University Office">University Office</option>
+                                        <option value="Deposit to Bank">Deposit to Bank</option>
+                                        <option value="City Office">City Office</option>
+                                    </select>
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
 
-                                              <div class="col-4" id="receiptDate_div" style="display:none">
-                                                  <label>Cash/Cheque/DD/NEFT Date</label>
-                                                  <div class="form-group">
-                                                      <div class="input-group">
-                                                          <input id="add_transaction_date" name="add_transaction_date" type="date" class="form-control" value="<?php echo date("Y-m-d"); ?>"/>
-                                                      </div>
-                                                      <!-- /.input group -->
-                                                  </div>
-                                              </div>
-                                          							
-						  	
-						</div>
+                        <div class="col-4" id="receiptDate_div" style="display:none">
+                            <label>Cash/Cheque/DD/NEFT Date</label>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input id="add_transaction_date" name="add_transaction_date" type="date" class="form-control" value="<?php echo date("Y-m-d"); ?>" />
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                        </div>
+
+
+                    </div>
                     <input type='hidden' name='action' value='add_prospectus' />
                     <div class="col-md-12" id="loader_section"></div>
                     <button type="button" id="add_prospectus_button" class="btn btn-primary">Submit</button>
@@ -276,7 +291,7 @@
         </div>
     </div>
     <!-- Add Prospectus Modal End -->
-  
+
     <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
@@ -301,31 +316,30 @@
                 "autoWidth": false,
             });
         });
-
     </script>
-    	<script>
-        function PaymentModeSelect(PaymentMode){
+    <script>
+        function PaymentModeSelect(PaymentMode) {
             var bankName_div = document.getElementById('bankName_div');
             var chequeNo_div = document.getElementById('chequeNo_div');
             var receiptDate_div = document.getElementById('receiptDate_div');
             var cashDepositTo_div = document.getElementById('cashDepositTo_div');
-            if(PaymentMode == "Cash"){
+            if (PaymentMode == "Cash") {
                 // cash_div.style.display = "block";
                 bankName_div.style.display = "none";
                 chequeNo_div.style.display = "none";
                 receiptDate_div.style.display = "block";
                 cashDepositTo_div.style.display = "block";
-            } else if(PaymentMode == "Cheque" || PaymentMode == "DD" || PaymentMode == "Online" || PaymentMode == "NEFT/IMPS/RTGS"){
-                        bankName_div.style.display = "block";
-                        chequeNo_div.style.display = "block";
-                        receiptDate_div.style.display = "block";
-                        cashDepositTo_div.style.display = "none";
-                    } else{
-                        bankName_div.style.display = "none";
-                        chequeNo_div.style.display = "none";
-                        receiptDate_div.style.display = "none";
-                        cashDepositTo_div.style.display = "block";
-                    }
+            } else if (PaymentMode == "Cheque" || PaymentMode == "DD" || PaymentMode == "Online" || PaymentMode == "NEFT/IMPS/RTGS") {
+                bankName_div.style.display = "block";
+                chequeNo_div.style.display = "block";
+                receiptDate_div.style.display = "block";
+                cashDepositTo_div.style.display = "none";
+            } else {
+                bankName_div.style.display = "none";
+                chequeNo_div.style.display = "none";
+                receiptDate_div.style.display = "none";
+                cashDepositTo_div.style.display = "block";
+            }
         }
     </script>
     <script>
@@ -360,7 +374,6 @@
             });
 
         });
-
     </script>
     <script>
         $(document).ready(function() {
@@ -372,29 +385,31 @@
                     $("#data_table").html(result);
                 }
             });
-//            $('#add_course_button').click(function(){
-//                $.ajax({
-//                    url: 'include/view.php?action=get_courses',
-//                    type: 'GET',
-//                    success: function(result) {
-//                        $("#data_table").html(result);
-//                    }
-//                });
-//            });
+            //            $('#add_course_button').click(function(){
+            //                $.ajax({
+            //                    url: 'include/view.php?action=get_courses',
+            //                    type: 'GET',
+            //                    success: function(result) {
+            //                        $("#data_table").html(result);
+            //                    }
+            //                });
+            //            });
         });
     </script>
     <script>
-    function showdesg(dept) {
-        $.ajax({
-            url: 'ajaxdata1.php',
-            type: 'POST',
-            data: {depart: dept},
-            success: function (data) {
-                $("#add_prospectus_rate").html(data);
-            },
-        });
-    }
-</script>
+        function showdesg(dept) {
+            $.ajax({
+                url: 'ajaxdata1.php',
+                type: 'POST',
+                data: {
+                    depart: dept
+                },
+                success: function(data) {
+                    $("#add_prospectus_rate").html(data);
+                },
+            });
+        }
+    </script>
 </body>
 
 </html>

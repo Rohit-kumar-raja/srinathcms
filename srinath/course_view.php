@@ -118,6 +118,12 @@ include "include/authentication.php";
                                 <input type="text" name="prospectus_fee" class="form-control">
                             </label>
                         </div>
+                        <div class="form-group col-sm-6">
+
+                            <label>Duration
+                                <input type="text" name="prospectus_duration" class="form-control">
+                            </label>
+                        </div>
                     </div>
                     <input type='hidden' name='action' value='add_courses' />
                     <div class="col-md-12" id="loader_section"></div>

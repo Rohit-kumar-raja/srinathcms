@@ -757,6 +757,14 @@
                           </li>						  
                       </ul>
                   </li>
+                  <li class="nav-item has-treeview" <?php if(isset($autority)){ $page_no_temp = 10; if(isset($allAutority->$page_no_temp)){ if($allAutority->$page_no_temp == ""){ echo "style='display:none;';"; } } else { echo "style='display:none;';"; } } ?>>
+                      <a href="../../attendance/admin/login.php" class="nav-link <?php if($page_no == "10"){ echo 'active'; } ?>">
+                      <i class="fas fa-book-reader nav-icon"></i>
+                          <p>
+                              Attendance
+                          </p>
+                      </a>
+                  </li>
                  <li class="nav-item has-treeview" <?php if(isset($autority)){ $page_no_temp = 10; if(isset($allAutority->$page_no_temp)){ if($allAutority->$page_no_temp == ""){ echo "style='display:none;';"; } } else { echo "style='display:none;';"; } } ?>>
                       <a href="trash" class="nav-link <?php if($page_no == "10"){ echo 'active'; } ?>">
                           <i class="nav-icon fas fa-trash"></i>

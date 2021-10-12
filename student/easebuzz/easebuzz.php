@@ -57,8 +57,8 @@
           //$SALT = "DAH88E3UWQ"; //setup test enviroment
           //$ENV = "test";    // setup test enviroment (testpay.easebuzz.in). 
       
-          $MERCHANT_KEY = "VNQSM82SAE";  
-          $SALT = "LNRNU85EPI"; 
+          $MERCHANT_KEY = "8JRIP7LJQU";  
+          $SALT = "92HHB0OBFH"; 
           $ENV = "prod";   // setup production enviroment (pay.easebuzz.in).
  
         $easebuzzObj = new Easebuzz($MERCHANT_KEY, $SALT, $ENV);

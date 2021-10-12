@@ -174,7 +174,7 @@
 								$resultVar = "FAIL";
 							}
 							$data = array(
-										"University"         =>  "nsuniv.ac.in",
+										"University"         =>  "www.srinathuniversity.in",
 										"Reg No"             =>  $row["reg_no"],
 										"Academic Session"   =>  $completeSessionOnlyYear,
 										"Course"             =>  $row_course["course_name"],

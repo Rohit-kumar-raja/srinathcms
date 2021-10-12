@@ -199,8 +199,9 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- Page script -->
+  
     <script>
-        $(function() {
+       $(function() {
             //Initialize Select2 Elements
             $('.select2').select2()
 
@@ -271,8 +272,8 @@
 
         })
 
-    </script>
-    <!--
+     </script>
+    
     <script>
         $(document).ready(function (e){
 
@@ -308,7 +309,7 @@
         });
 
     </script>
--->
+
     <script>
         $(document).ready(function() {
             setInterval(function(){

@@ -203,7 +203,7 @@ form.login1 a:hover
 
 @media screen and (max-width: 600px) {
   body{
- background-image: none !important; background-color:brown !important; 
+ /* background-image: none !important; background-color:brown !important;  */
  margin-top:-200px!important;
    
   }

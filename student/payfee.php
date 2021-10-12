@@ -1,12 +1,12 @@
-<?php 
-    $page_no = "3";
-    $page_no_inside = "3_1";
-    include "include/authentication.php"; 
+<?php
+$page_no = "3";
+$page_no_inside = "3_1";
+include "include/authentication.php";
 ?>
-<?php 
-	$sql = "SELECT * FROM `tbl_admission` WHERE `status` = '$visible' && `admission_username` = '".$_SESSION["logger_username1"]."'";
-	$result = $con->query($sql);
-	$row = $result->fetch_assoc();
+<?php
+$sql = "SELECT * FROM `tbl_admission` WHERE `status` = '$visible' && `admission_username` = '" . $_SESSION["logger_username1"] . "'";
+$result = $con->query($sql);
+$row = $result->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html>
@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
     <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
-        
+
     </script>
 
     <!-- Google Font: Source Sans Pro -->
@@ -53,7 +53,6 @@
         td {
             border-collapse: collapse;
         }
-
     </style>
 </head>
 
@@ -86,7 +85,7 @@
                 <div class="container-fluid">
                     <!-- SELECT2 EXAMPLE -->
                     <div class="card card-default">
-                       <!-- <div class="card-header">
+                        <!-- <div class="card-header">
                             <h3 class="card-title">Pay Fee</h3>
 
                             <div class="card-tools">
@@ -94,10 +93,10 @@
                                 <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
                             </div>
                         </div>-->
-                     <form role="form" method="POST" id="fetchStudentDataForm">
+                        <form role="form" method="POST" id="fetchStudentDataForm">
                             <div class="card-body" style="margin-top: 0px;">
                                 <div class="row">
-                                   <div class="col-md-12" id="error_section"></div>
+                                    <div class="col-md-12" id="error_section"></div>
                                     <div class="col-md-5">
                                         <label>Student Registration No</label>
                                         <input type="text" name="studentRegistrationNo" value="<?php echo $row["admission_id"]; ?>" class="form-control" readonly>
@@ -107,12 +106,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <center><hr style="width:80%;"></center>
+                            <center>
+                                <hr style="width:80%;">
+                            </center>
                             <div class="col-12" id="loader_section"></div>
                         </form>
                         <div class="col-12" id="loader_section"></div>
                         <div id="data_table" class="col-md-12" style="margin-top: -35px;">
-                        
+
                         </div>
                     </div>
 
@@ -152,85 +153,84 @@
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- Page script -->
-    
+
     <script>
-      
-       function completeCalculation(){
-                                            var totalPaid = 0;
-                                            var totalParticular = 0;
-                                            var fineAmount = 0;
-                                            var rebateAmount = Number(document.getElementById("rebate_amount").value);
-                                            if(rebateAmount > 0){
-                                                if(document.getElementById("rebate_from").value == ""){
-                                                   $("#rebate_amount").addClass("is-invalid");
-                                                    $("#rebateErr").html("~ Please select 'Rebate From'");
-                                                } else{
-                                                    $("#rebate_amount").removeClass("is-invalid");
-                                                    $("#rebateErr").html("");
-                                                }
-                                              } else{
-                                                    $("#rebate_amount").removeClass("is-invalid");
-                                                    $("#rebateErr").html("");
-                                            }
-                                            var remainingAmount = 0;
-                                            <?php 
-                                                $Idno = 0;
-                                                foreach($arrayTblFee as $arrayTblFeeUpdate){
-                                                    ?>
-                                                        if(document.getElementById("particular_paid_amount[<?php echo $Idno; ?>]").value != "")
-                                                         totalParticular = totalParticular + parseInt(document.getElementById("particular_paid_amount[<?php echo $Idno; ?>]").value);
-                                                    <?php
-                                                    $Idno++;
-                                                }
-                                            ?>
-                                            if(document.getElementById("fine_amount").value != "")
-                                            fineAmount = parseInt(document.getElementById("fine_amount").value);
-                                          //firstName = '<%= Session["FirstName"] ?? "" %>';
+        function completeCalculation() {
+            var totalPaid = 0;
+            var totalParticular = 0;
+            var fineAmount = 0;
+            var rebateAmount = Number(document.getElementById("rebate_amount").value);
+            if (rebateAmount > 0) {
+                if (document.getElementById("rebate_from").value == "") {
+                    $("#rebate_amount").addClass("is-invalid");
+                    $("#rebateErr").html("~ Please select 'Rebate From'");
+                } else {
+                    $("#rebate_amount").removeClass("is-invalid");
+                    $("#rebateErr").html("");
+                }
+            } else {
+                $("#rebate_amount").removeClass("is-invalid");
+                $("#rebateErr").html("");
+            }
+            var remainingAmount = 0;
+            <?php
+            $Idno = 0;
+            foreach ($arrayTblFee as $arrayTblFeeUpdate) {
+            ?>
+                if (document.getElementById("particular_paid_amount[<?php echo $Idno; ?>]").value != "")
+                    totalParticular = totalParticular + parseInt(document.getElementById("particular_paid_amount[<?php echo $Idno; ?>]").value);
+            <?php
+                $Idno++;
+            }
+            ?>
+            if (document.getElementById("fine_amount").value != "")
+                fineAmount = parseInt(document.getElementById("fine_amount").value);
+            //firstName = '<%= Session["FirstName"] ?? "" %>';
 
-                                           totalPaid = totalPaid + parseInt(totalParticular);
-                                           totalPaid = totalPaid + parseInt(fineAmount);
-                                            remainingAmount = parseInt(<?php echo $totalRemainings; ?>) - parseInt(totalPaid) - parseInt(rebateAmount);
-                                            //$("#total_amount").val(totalPaid);
-                                            //$("#total_amount").val(remainingAmount);
-											$("#amount").val(totalPaid+".0");
-                                            //$("#remaining_amount").val(remainingAmount);
-                                            //$("#remaining_amount").val(0);
-                                            if(0 > parseInt(remainingAmount)){
-                                                $("#remaining_amount").addClass("is-invalid");
-                                                $("#remainingErr").html("~ Cannot use negative value, Remaining value must be 'greater than or equal to 0'");
-                                                $("#totalErr").html("~ Total value must be 'less than or equal to <?php echo $totalRemainings; ?>'");
-                                                $("#total_amount").addClass("is-invalid");
-                                            } else{
-                                                $("#remaining_amount").removeClass("is-invalid");
-                                                $("#total_amount").removeClass("is-invalid");
-                                                $("#remainingErr").html("");
-                                                $("#totalErr").html("");
-                                            }
-                                        }
-      
-      
-      
+            totalPaid = totalPaid + parseInt(totalParticular);
+            totalPaid = totalPaid + parseInt(fineAmount);
+            remainingAmount = parseInt(<?php echo $totalRemainings; ?>) - parseInt(totalPaid) - parseInt(rebateAmount);
+            //$("#total_amount").val(totalPaid);
+            //$("#total_amount").val(remainingAmount);
+            $("#amount").val(totalPaid + ".0");
+            //$("#remaining_amount").val(remainingAmount);
+            //$("#remaining_amount").val(0);
+            if (0 > parseInt(remainingAmount)) {
+                $("#remaining_amount").addClass("is-invalid");
+                $("#remainingErr").html("~ Cannot use negative value, Remaining value must be 'greater than or equal to 0'");
+                $("#totalErr").html("~ Total value must be 'less than or equal to <?php echo $totalRemainings; ?>'");
+                $("#total_amount").addClass("is-invalid");
+            } else {
+                $("#remaining_amount").removeClass("is-invalid");
+                $("#total_amount").removeClass("is-invalid");
+                $("#remainingErr").html("");
+                $("#totalErr").html("");
+            }
+        }
+
+
+
         document.onkeydown = function(e) {
-  if(event.keyCode == 123) {
-   return false;
-   }
-if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-return false;
-}
-if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
-return false;
-}
-  
-if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)){
-return false;
-}
-    
-if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
-return false;
-}
-}
+            if (event.keyCode == 123) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
+                return false;
+            }
 
-  
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
+                return false;
+            }
+
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
+                return false;
+            }
+        }
+
+
         $(function() {
             //Initialize Select2 Elements
             $('.select2').select2()
@@ -301,11 +301,10 @@ return false;
             });
 
         });
-
     </script>
     <script>
         $(document).ready(function() {
-            $('#fetchStudentDataForm').submit(function( event ) {
+            $('#fetchStudentDataForm').submit(function(event) {
                 $('#loader_section').append('<center id = "loading"><img width="50px" src = "images/ajax-loader.gif" alt="Currently loading" /></center>');
                 $('#fetchStudentDataButton').prop('disabled', true);
                 $.ajax({
@@ -315,14 +314,14 @@ return false;
                     success: function(result) {
                         //$("#data_table").html(result);
                         $('#response').remove();
-                        if(result == 0){
+                        if (result == 0) {
                             $('#error_section').append('<div id = "response"><div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Please enter Registration Number!!!</div></div>');
-                        } else if(result == 1){
-                                    $('#error_section').append('<div id = "response"><div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Please select Academic Year!!!</div></div>');
-                                } else{
-                                    //$('#fetchStudentDataForm')[0].reset();
-                                    $('#data_table').append('<div id = "response">' + result + '</div>');
-                                }
+                        } else if (result == 1) {
+                            $('#error_section').append('<div id = "response"><div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><i class="icon fas fa-ban"></i> Please select Academic Year!!!</div></div>');
+                        } else {
+                            //$('#fetchStudentDataForm')[0].reset();
+                            $('#data_table').append('<div id = "response">' + result + '</div>');
+                        }
                         $('#loading').fadeOut(500, function() {
                             $(this).remove();
                         });
@@ -332,9 +331,12 @@ return false;
                 event.preventDefault();
             });
         });
-      
-      
     </script>
+    <script src="./dist/js/Remaingcheck.js"></script>
 </body>
+<<<<<<< HEAD
   <script src="./dist/js/Remaingcheck.js"></script>
+=======
+<!-- somthing is changed  -->
+>>>>>>> 9d0283c37ada8b74adfe68a4f7f6700faa1883e3
 </html>

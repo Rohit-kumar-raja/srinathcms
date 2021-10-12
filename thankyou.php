@@ -19,10 +19,10 @@
         <p class="lead">Thank you for <strong> Contributed </strong> self</p>
         <hr>
         <p>
-            Having trouble? <a href="../contact.php">Contact us</a>
+            Having trouble? <a href="mailto:">Contact us</a>
         </p>
         <p class="lead">
-            <a class="btn btn-primary btn-sm" href="../index.php" role="button">Continue to homepage</a>
+            <a class="btn btn-primary btn-sm" href="index.php" role="button">Continue to homepage</a>
         </p>
     </div>
 <!-- thank you the html -->

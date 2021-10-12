@@ -83,8 +83,18 @@
                 </p>-->
             </div>
             <!-- /.login-card-body -->
+         <style>
+             .text-center{
+                 margin-left: -240px;
+                 color: white;
+                 width: 800px;
+                 margin-top: 100px;
+             }
+         </style>
         </div>
+        <?php include "../attendance/include/footer.php"; ?>
     </div>
+
     <!-- /.login-box -->
 
     <!-- jQuery -->

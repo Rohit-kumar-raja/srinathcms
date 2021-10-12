@@ -41,12 +41,12 @@ include "include/authentication.php";
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Prospectus Enquiry</h1>
+                        <h1>Admission Enquiry</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Prospectus</a></li>
-                            <li class="breadcrumb-item active">Prospectus Enquiry</li>
+                            <li class="breadcrumb-item"><a href="#">Admission</a></li>
+                            <li class="breadcrumb-item active">Admission Enquiry</li>
                         </ol>
                     </div>
                 </div>
