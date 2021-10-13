@@ -1,6 +1,7 @@
 <?php
-$page_no = "5";
-$page_no_inside = "5_1";
+$msg="";
+// $page_no = "5";
+// $page_no_inside = "5_1";
 $admission_id = $_GET['edit'];
 include './include/config.php';
 
@@ -68,7 +69,8 @@ $admission_others_college_name = $fetch_data['admission_others_college_name'];
 $admission_others_passing_year = $fetch_data['admission_others_passing_year'];
 $admission_others_per = $fetch_data['admission_others_per'];
 $admission_others_subjects = $fetch_data['admission_others_subjects'];
-$admission_tenth_marksheet = $fetch_data['admission_tenth_marksheet'];
+ $admission_tenth_marksheet = $fetch_data['admission_tenth_marksheet'];
+
 $admission_tenth_passing_certificate = $fetch_data['admission_tenth_passing_certificate'];
 $admission_twelve_markesheet = $fetch_data['admission_twelve_markesheet'];
 $admission_twelve_passing_certificate = $fetch_data['admission_twelve_passing_certificate'];
@@ -187,8 +189,10 @@ $max_value = $result['id'] + 1;
               <h3 class="card-title">Admission Form</h3>
 
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                    class="fas fa-minus"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove"><i
+                    class="fas fa-remove"></i></button>
               </div>
             </div>
 
@@ -205,20 +209,23 @@ $max_value = $result['id'] + 1;
                   </div>
                   <div class="col-4">
                     <label>Enter Prospectus No</label>
-                    <input disabled id="form_no" type="text" name="add_admission_form_no" class="form-control" value="<?php echo $prospectus_number; ?>" required>
+                    <input disabled id="form_no" type="text" name="add_admission_form_no" class="form-control"
+                      value="<?php echo $prospectus_number; ?>" required>
                   </div>
                   <div class="col-4">
                     <label>Admission No</label>
-                    <input type="text" name="add_admission_no" class="form-control" value="<?php echo 'SU/' . $admission_course_name . '/' . trim($admission_session) . '/' . $max_value ?>" readonly placeholder="Generate By University">
+                    <input type="text" name="add_admission_no" class="form-control"
+                      value="<?php echo 'SU/' . $admission_course_name . '/' . trim($admission_session) . '/' . $max_value ?>"
+                      readonly placeholder="Generate By University">
                   </div>
 
                   <div class="col-4">
                     <label>Title</label>
                     <select name="add_admission_title" class="form-control">
                       <?php if ($admission_title != '') { ?>
-                        <option value="<?php echo $admission_title ?>"><?php echo $admission_title; ?></option>
+                      <option value="<?php echo $admission_title ?>"><?php echo $admission_title; ?></option>
                       <?php } else { ?>
-                        <option value="0">Select</option>
+                      <option value="0">Select</option>
                       <?php } ?>
                       <option value="Master">Master</option>
                       <option value="Miss">Miss</option>
@@ -229,7 +236,8 @@ $max_value = $result['id'] + 1;
 
                   <div class="col-4">
                     <label> Name</label>
-                    <input id="first_name" type="text" name="add_admission_first_name" class="form-control" value="<?php echo $admission_first_name; ?>" required>
+                    <input id="first_name" type="text" name="add_admission_first_name" class="form-control"
+                      value="<?php echo $admission_first_name; ?>" required>
                   </div>
 
 
@@ -238,16 +246,17 @@ $max_value = $result['id'] + 1;
                     <label>Course</label>
                     <select id="course" name="add_admission_course_name" class="form-control" required>
                       <?php if ($admission_course_name != '') { ?>
-                        <option value="<?php echo $admission_course_name; ?>"><?php echo $admission_course_name ?></option>
+                      <option value="<?php echo $admission_course_name; ?>"><?php echo $admission_course_name ?>
+                      </option>
                       <?php } else { ?>
-                        <option value="">-Select-</option>
+                      <option value="">-Select-</option>
                       <?php   } ?>
                       <?php
                       $sql = "select * from tbl_course";
                       $query = mysqli_query($con, $sql);
                       while ($row = mysqli_fetch_array($query)) {
                       ?>
-                        <option value="<?php echo $row['course_id']; ?>"><?php echo $row['course_name']; ?></option>
+                      <option value="<?php echo $row['course_id']; ?>"><?php echo $row['course_name']; ?></option>
                       <?php } ?>
                     </select>
                   </div>
@@ -258,49 +267,60 @@ $max_value = $result['id'] + 1;
                     <label>Session</label>
                     <select id="session_check" class="form-control" name="add_admission_session">
                       <?php if ($admission_session != '') { ?>
-                        <option value=" <?php echo $admission_session ?>" selected><?php echo $admission_session; ?></option>
+                      <option value=" <?php echo $admission_session ?>" selected><?php echo $admission_session; ?>
+                      </option>
                       <?php } else {
 
                       ?>
-                        <option value=" " selected disabled="">-Select-</option>
+                      <option value=" " selected disabled="">-Select-</option>
                       <?php } ?>
                       <option value="<?php echo date('Y');
                                       echo " - ";
-                                      echo date('Y', strtotime('+3 year')); ?>"><?php echo date('Y');
+                                      echo date('Y', strtotime('+3 year')); ?>">
+                        <?php echo date('Y');
                                                                                 echo " - ";
-                                                                                echo date('Y', strtotime('+3 year')); ?></option>
+                                                                                echo date('Y', strtotime('+3 year')); ?>
+                      </option>
                       <option value="<?php echo date('Y');
                                       echo " - ";
-                                      echo date('Y', strtotime('+4 year')); ?>"><?php echo date('Y');
+                                      echo date('Y', strtotime('+4 year')); ?>">
+                        <?php echo date('Y');
                                                                                 echo " - ";
-                                                                                echo date('Y', strtotime('+4 year')); ?></option>
+                                                                                echo date('Y', strtotime('+4 year')); ?>
+                      </option>
                     </select>
                   </div>
                   <div class="col-4">
                     <label>Date Of Birth</label>
-                    <input id="dob" type="date" name="add_admission_dob" class="form-control" value="<?php echo  date("Y-m-d", strtotime(str_replace('/', '-', $admission_dob)));   ?>" required>
+                    <input id="dob" type="date" name="add_admission_dob" class="form-control"
+                      value="<?php echo  date("Y-m-d", strtotime(str_replace('/', '-', $admission_dob)));   ?>"
+                      required>
                   </div>
 
                   <div class="col-4">
                     <label>Nationality</label>
-                    <input type="text" name="add_admission_nationality" class="form-control" value="<?php echo $admission_nationality; ?>">
+                    <input type="text" name="add_admission_nationality" class="form-control"
+                      value="<?php echo $admission_nationality; ?>">
                   </div>
                   <div class="col-4">
                     <label>Aadhar No</label>
-                    <input type="text" name="add_admission_aadhar_no" class="form-control" value="<?php echo $admission_aadhar_no; ?>">
+                    <input type="text" name="add_admission_aadhar_no" class="form-control"
+                      value="<?php echo $admission_aadhar_no; ?>">
                   </div>
 
                   <div class="col-4">
                     <label>Date Of Admission</label>
-                    <input type="date" name="add_date_of_admission" class="form-control" value="<?php echo date("Y-m-d"); ?>">
+                    <input type="date" name="add_date_of_admission" class="form-control"
+                      value="<?php echo date("Y-m-d"); ?>">
                   </div>
                   <div class="col-4">
                     <label>Category</label>
                     <select name="add_admission_category" class="form-control">
                       <?php if ($admission_category != '0') { ?>
-                        <option selected value="<?php echo $admission_category ?>"> <?php echo $admission_category; ?></option>
+                      <option selected value="<?php echo $admission_category ?>"> <?php echo $admission_category; ?>
+                      </option>
                       <?php } else { ?>
-                        <option selected disabled>Select</option>
+                      <option selected disabled>Select</option>
                       <?php } ?>
                       <option value="General">General</option>
                       <option value="SC">SC</option>
@@ -312,9 +332,10 @@ $max_value = $result['id'] + 1;
                     <label>Gender</label>
                     <select id="gender" name="add_admission_gender" class="form-control">
                       <?php if ($admission_gender != '') { ?>
-                        <option selected value="<?php echo $admission_gender ?>"> <?php echo $admission_gender; ?></option>
+                      <option selected value="<?php echo $admission_gender ?>"> <?php echo $admission_gender; ?>
+                      </option>
                       <?php } else { ?>
-                        <option selected disabled>Select</option>
+                      <option selected disabled>Select</option>
                       <?php } ?>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -324,24 +345,28 @@ $max_value = $result['id'] + 1;
 
                   <div class="col-md-4">
                     <label>Username</label>
-                    <input type="text" name="add_admission_username" class="form-control" value="<?php echo $admission_username ?>" required>
+                    <input type="text" name="add_admission_username" class="form-control"
+                      value="<?php echo $admission_username ?>" required>
                   </div>
                   <div class="col-4">
                     <label>Password</label>
-                    <input type="password" name="add_admission_password" class="form-control" disabled value="<?php echo $admission_password ?>">
+                    <input type="password" name="add_admission_password" class="form-control" disabled
+                      value="<?php echo $admission_password ?>">
                   </div>
                   <div class="col-4">
                     <label>Blood Group</label>
-                    <input type="text" name="add_admission_blood_group" class="form-control" value="<?php echo $admission_blood_group; ?>">
+                    <input type="text" name="add_admission_blood_group" class="form-control"
+                      value="<?php echo $admission_blood_group; ?>">
                   </div>
 
                   <div class="col-4">
                     <label>Hostel</label>
                     <select name="add_admission_hostel" class="form-control">
                       <?php if ($admission_hostel != '') { ?>
-                        <option selected value="<?php echo $admission_hostel ?>"> <?php echo $admission_hostel; ?></option>
+                      <option selected value="<?php echo $admission_hostel ?>"> <?php echo $admission_hostel; ?>
+                      </option>
                       <?php } else { ?>
-                        <option selected disabled>Select</option>
+                      <option selected disabled>Select</option>
                       <?php } ?>
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
@@ -351,9 +376,10 @@ $max_value = $result['id'] + 1;
                     <label>Transport</label>
                     <select name="add_admission_transport" class="form-control">
                       <?php if ($admission_transport != '') { ?>
-                        <option selected value="<?php echo $admission_transport ?>"> <?php echo $admission_transport; ?></option>
+                      <option selected value="<?php echo $admission_transport ?>"> <?php echo $admission_transport; ?>
+                      </option>
                       <?php } else { ?>
-                        <option selected disabled>Select</option>
+                      <option selected disabled>Select</option>
                       <?php } ?>
                       <option value="No">No</option>
                       <option value="Yes">Yes</option>
@@ -363,17 +389,21 @@ $max_value = $result['id'] + 1;
 
                   <div class="col-4">
                     <label>Image</label>
-                    <input type="file" name="add_admission_profile_image" id="add_admission_profile_image" class="form-control">
+                    <input type="file" name="add_admission_profile_image" id="add_admission_profile_image"
+                      class="form-control">
                   </div>
                   <?php if ($admission_profile_image != '') { ?>
-                    <div class="col-4">
-                      <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_profile_image) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
-                    </div>
+                  <div class="col-4">
+                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_profile_image) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
+                  </div>
                   <?php } else { ?>
 
-                    <div class="col-4">
-                      <img src="http://www.clipartpanda.com/clipart_images/user-66327738/download" id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
-                    </div>
+                  <div class="col-4">
+                    <img src="http://www.clipartpanda.com/clipart_images/user-66327738/download" id="photoBrowser"
+                      style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                  </div>
                   <?php } ?>
 
 
@@ -392,43 +422,53 @@ $max_value = $result['id'] + 1;
                 <div class="row">
                   <div class="col-4">
                     <label>Residential Address</label>
-                    <textarea id="address" name="add_admission_residential_address" class="form-control" style="height: 38px;"> <?php echo $admission_residential_address ?></textarea>
+                    <textarea id="address" name="add_admission_residential_address" class="form-control"
+                      style="height: 38px;"> <?php echo $admission_residential_address ?></textarea>
                   </div>
                   <div class="col-4">
                     <label>State</label>
-                    <input id="state" type="text" name="add_admission_state" value="<?php echo $admission_state; ?>" class="form-control">
+                    <input id="state" type="text" name="add_admission_state" value="<?php echo $admission_state; ?>"
+                      class="form-control">
                   </div>
                   <div class="col-4">
                     <label>City</label>
-                    <input id="city" type="text" value="<?php echo $admission_city ?>" name="add_admission_city" class="form-control">
+                    <input id="city" type="text" value="<?php echo $admission_city ?>" name="add_admission_city"
+                      class="form-control">
                   </div>
                   <div class="col-4">
                     <label>District</label>
-                    <input type="text" value="<?php echo $admission_district; ?>" name="add_admission_district" class="form-control">
+                    <input type="text" value="<?php echo $admission_district; ?>" name="add_admission_district"
+                      class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Pin Code</label>
-                    <input id="postal_code" value="<?php echo $admission_pin_code ?>" type="text" name="add_admission_pin_code" class="form-control">
+                    <input id="postal_code" value="<?php echo $admission_pin_code ?>" type="text"
+                      name="add_admission_pin_code" class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Home Landline no.</label>
-                    <input type="text" name="add_admission_home_landlineno" value="<?php echo $admission_home_landlineno ?>" class="form-control">
+                    <input type="text" name="add_admission_home_landlineno"
+                      value="<?php echo $admission_home_landlineno ?>" class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Mobile No. (Student)</label>
-                    <input id="mobile_no" type="text" value="<?php echo $admission_mobile_student; ?>" name="add_admission_mobile_student" class="form-control">
+                    <input id="mobile_no" type="text" value="<?php echo $admission_mobile_student; ?>"
+                      name="add_admission_mobile_student" class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Father Phone No.</label>
-                    <input type="text" value="<?php echo $admission_father_phoneno ?>" name="add_admission_father_phoneno" class="form-control">
+                    <input type="text" value="<?php echo $admission_father_phoneno ?>"
+                      name="add_admission_father_phoneno" class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Email Id (Father)</label>
-                    <input type="email" value="<?php echo $admission_emailid_father ?>" name="add_admission_emailid_father" class="form-control">
+                    <input type="email" value="<?php echo $admission_emailid_father ?>"
+                      name="add_admission_emailid_father" class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Email Id (Student)</label>
-                    <input id="email_id" type="email" value="<?php echo $admission_emailid_student; ?>" name="add_admission_emailid_student" class="form-control">
+                    <input id="email_id" type="email" value="<?php echo $admission_emailid_student; ?>"
+                      name="add_admission_emailid_student" class="form-control">
                   </div>
 
                 </div>
@@ -446,15 +486,18 @@ $max_value = $result['id'] + 1;
                 <div class="row">
                   <div class="col-4">
                     <label>Father Name</label>
-                    <input id="father_name" value="<?php echo $admission_father_name ?>" type="text" name="add_admission_father_name" class="form-control">
+                    <input id="father_name" value="<?php echo $admission_father_name ?>" type="text"
+                      name="add_admission_father_name" class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Father Whatsapp No</label>
-                    <input type="text" value="<?php echo $admission_father_whatsappno ?>" name="add_admission_father_whatsappno" class="form-control">
+                    <input type="text" value="<?php echo $admission_father_whatsappno ?>"
+                      name="add_admission_father_whatsappno" class="form-control">
                   </div>
                   <div class="col-4">
                     <label>Mother Name</label>
-                    <input id="mother_name" value="<?php echo $admission_mother_name ?>" type="text" name="add_admission_mother_name" class="form-control">
+                    <input id="mother_name" value="<?php echo $admission_mother_name ?>" type="text"
+                      name="add_admission_mother_name" class="form-control">
                   </div>
                 </div>
               </div>
@@ -483,47 +526,72 @@ $max_value = $result['id'] + 1;
                   <tr>
                     <td>1</td>
                     <td>High School</td>
-                    <td><input type="text" name="add_admission_high_school_board_university" size="15" value="<?php echo $admission_high_school_board_university; ?>"></td>
-                    <td><input type="text" name="add_admission_high_school_college_name" size="15" value="<?php echo $admission_high_school_college_name ?>"></td>
-                    <td><input type="text" name="add_admission_high_school_passing_year" size="15" value="<?php echo $admission_high_school_passing_year ?>"></td>
-                    <td><input type="text" name="add_admission_high_school_per" size="15" value="<?php echo $admission_high_school_per ?>"></td>
-                    <td><input type="text" name="add_admission_high_school_subjects" size="15" value="<?php echo $admission_high_school_subjects ?>"></td>
+                    <td><input type="text" name="add_admission_high_school_board_university" size="15"
+                        value="<?php echo $admission_high_school_board_university; ?>"></td>
+                    <td><input type="text" name="add_admission_high_school_college_name" size="15"
+                        value="<?php echo $admission_high_school_college_name ?>"></td>
+                    <td><input type="text" name="add_admission_high_school_passing_year" size="15"
+                        value="<?php echo $admission_high_school_passing_year ?>"></td>
+                    <td><input type="text" name="add_admission_high_school_per" size="15"
+                        value="<?php echo $admission_high_school_per ?>"></td>
+                    <td><input type="text" name="add_admission_high_school_subjects" size="15"
+                        value="<?php echo $admission_high_school_subjects ?>"></td>
                   </tr>
                   <tr>
                     <td>2</td>
                     <td>Intermediate</td>
-                    <td><input type="text" name="add_admission_intermediate_board_university" size="15" value="<?php echo $admission_intermediate_board_university ?>"></td>
-                    <td><input type="text" name="add_admission_intermediate_college_name" size="15" value="<?php echo $admission_intermediate_college_name ?>"></td>
-                    <td><input type="text" name="add_admission_intermediate_passing_year" size="15" value="<?php echo $admission_intermediate_passing_year ?>"></td>
-                    <td><input type="text" name="add_admission_intermediate_per" size="15" value="<?php echo $admission_intermediate_per ?>"></td>
-                    <td><input type="text" name="add_admission_intermediate_subjects" size="15" value="<?php echo $admission_intermediate_subjects ?>"></td>
+                    <td><input type="text" name="add_admission_intermediate_board_university" size="15"
+                        value="<?php echo $admission_intermediate_board_university ?>"></td>
+                    <td><input type="text" name="add_admission_intermediate_college_name" size="15"
+                        value="<?php echo $admission_intermediate_college_name ?>"></td>
+                    <td><input type="text" name="add_admission_intermediate_passing_year" size="15"
+                        value="<?php echo $admission_intermediate_passing_year ?>"></td>
+                    <td><input type="text" name="add_admission_intermediate_per" size="15"
+                        value="<?php echo $admission_intermediate_per ?>"></td>
+                    <td><input type="text" name="add_admission_intermediate_subjects" size="15"
+                        value="<?php echo $admission_intermediate_subjects ?>"></td>
                   </tr>
                   <tr>
                     <td>3</td>
                     <td>Graduation</td>
-                    <td><input type="text" name="add_admission_graduation_board_university" size="15" value="<?php echo $admission_graduation_board_university ?>"></td>
-                    <td><input type="text" name="add_admission_graduation_college_name" size="15" value="<?php echo $admission_graduation_college_name ?>"></td>
-                    <td><input type="text" name="add_admission_graduation_passing_year" size="15" value="<?php echo $admission_graduation_passing_year ?>"></td>
-                    <td><input type="text" name="add_admission_graduation_per" size="15" value="<?php echo $admission_graduation_per ?>"></td>
-                    <td><input type="text" name="add_admission_graduation_subjects" size="15" value="<?php echo $admission_graduation_subjects ?>"></td>
+                    <td><input type="text" name="add_admission_graduation_board_university" size="15"
+                        value="<?php echo $admission_graduation_board_university ?>"></td>
+                    <td><input type="text" name="add_admission_graduation_college_name" size="15"
+                        value="<?php echo $admission_graduation_college_name ?>"></td>
+                    <td><input type="text" name="add_admission_graduation_passing_year" size="15"
+                        value="<?php echo $admission_graduation_passing_year ?>"></td>
+                    <td><input type="text" name="add_admission_graduation_per" size="15"
+                        value="<?php echo $admission_graduation_per ?>"></td>
+                    <td><input type="text" name="add_admission_graduation_subjects" size="15"
+                        value="<?php echo $admission_graduation_subjects ?>"></td>
                   </tr>
                   <tr>
                     <td>4</td>
                     <td>Post Graduation</td>
-                    <td><input type="text" name="add_admission_post_graduation_board_university" size="15" value="<?php echo $admission_post_graduation_board_university ?>"></td>
-                    <td><input type="text" name="add_admission_post_graduation_college_name" size="15" value="<?php echo $admission_post_graduation_college_name ?>"></td>
-                    <td><input type="text" name="add_admission_post_graduation_others" size="15" value="<?php echo $admission_post_graduation_others ?>"></td>
-                    <td><input type="text" name="add_admission_post_graduation_per" size="15" value="<?php echo $admission_post_graduation_per ?>"></td>
-                    <td><input type="text" name="add_admission_post_graduation_subjects" size="15" value="<?php echo $admission_post_graduation_subjects ?>"></td>
+                    <td><input type="text" name="add_admission_post_graduation_board_university" size="15"
+                        value="<?php echo $admission_post_graduation_board_university ?>"></td>
+                    <td><input type="text" name="add_admission_post_graduation_college_name" size="15"
+                        value="<?php echo $admission_post_graduation_college_name ?>"></td>
+                    <td><input type="text" name="add_admission_post_graduation_others" size="15"
+                        value="<?php echo $admission_post_graduation_others ?>"></td>
+                    <td><input type="text" name="add_admission_post_graduation_per" size="15"
+                        value="<?php echo $admission_post_graduation_per ?>"></td>
+                    <td><input type="text" name="add_admission_post_graduation_subjects" size="15"
+                        value="<?php echo $admission_post_graduation_subjects ?>"></td>
                   </tr>
                   <tr>
                     <td>5</td>
                     <td>Others</td>
-                    <td><input type="text" name="add_admission_others_board_university" size="15" value="<?php echo $admission_others_board_university ?>"></td>
-                    <td><input type="text" name="add_admission_others_college_name" size="15" value="<?php echo $admission_others_college_name ?>"></td>
-                    <td><input type="text" name="add_admission_others_passing_year" size="15" value="<?php echo $admission_others_passing_year ?>"></td>
-                    <td><input type="text" name="add_admission_others_per" size="15" value="<?php echo $admission_others_per ?>"></td>
-                    <td><input type="text" name="add_admission_others_subjects" size="15" value="<?php echo $admission_others_subjects ?>"></td>
+                    <td><input type="text" name="add_admission_others_board_university" size="15"
+                        value="<?php echo $admission_others_board_university ?>"></td>
+                    <td><input type="text" name="add_admission_others_college_name" size="15"
+                        value="<?php echo $admission_others_college_name ?>"></td>
+                    <td><input type="text" name="add_admission_others_passing_year" size="15"
+                        value="<?php echo $admission_others_passing_year ?>"></td>
+                    <td><input type="text" name="add_admission_others_per" size="15"
+                        value="<?php echo $admission_others_per ?>"></td>
+                    <td><input type="text" name="add_admission_others_subjects" size="15"
+                        value="<?php echo $admission_others_subjects ?>"></td>
                   </tr>
                 </tbody>
               </table>
@@ -542,59 +610,87 @@ $max_value = $result['id'] + 1;
                   <div class="col-4">
                     <label>10th Marksheet</label>
                     <input type="file" name="add_admission_tenth_marksheet" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_tenth_marksheet) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_tenth_marksheet) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
                   </div>
                   <div class="col-4">
                     <label>10th Passing Certificate</label>
                     <input type="file" name="add_admission_tenth_passing_certificate" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_tenth_passing_certificate) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_tenth_passing_certificate) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
                   </div>
                   <div class="col-4">
                     <label>12th Marksheet</label>
                     <input type="file" name="add_admission_twelve_markesheet" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_twelve_markesheet) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_twelve_markesheet) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
                   </div>
 
                   <div class="col-4">
                     <label>12th Passing Certificate</label>
                     <input type="file" name="add_admission_twelve_passing_certificate" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_twelve_passing_certificate) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_twelve_passing_certificate) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
                   </div>
                   <div class="col-4">
                     <label>Graduation Marksheet</label>
                     <input type="file" name="add_admission_graduation_marksheet" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_graduation_marksheet) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_graduation_marksheet) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
 
                   </div>
                   <div class="col-4">
                     <label>Recent Character Certificate</label>
                     <input type="file" name="add_admission_recent_character_certificate" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_recent_character_certificate) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_recent_character_certificate) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
 
                   </div>
 
                   <div class="col-4">
                     <label>Other Certificate (If applicable)</label>
                     <input type="file" name="add_admission_other_certificate" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_other_certificate) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_other_certificate) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
 
                   </div>
                   <div class="col-4">
                     <label>Character Certificate (If applicable)</label>
                     <input type="file" name="add_admission_character_certificate" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_character_certificate) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img
+                      src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($admission_character_certificate) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
 
                   </div>
                   <div class="col-4">
                     <label> Student Signature </label>
                     <input type="file" name="student_signature" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($student_signature) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($student_signature) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
 
                   </div>
                   <div class="col-4">
                     <label>Parent Signature </label>
                     <input type="file" name="parent_signature" class="form-control">
-                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($parent_signature) . '" ' ?> id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120" height="120">
+                    <img src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($parent_signature) . '" ' ?>
+                      id="photoBrowser" style="margin-top:17px;margin-left:4px;border:solid 1px lightgray" width="120"
+                      height="120">
 
                   </div>
 
@@ -630,31 +726,47 @@ $max_value = $result['id'] + 1;
                   </tr>
                   <tr>
                     <td>2</td>
-                    <td><input type="text" name="add_admission_course2" size="15" value="<?php echo $admission_course2 ?>"></td>
-                    <td><input type="text" name="add_admission_board_university2" size="15" value="<?php echo $admission_board_university2 ?>"></td>
-                    <td><input type="text" name="add_admission_year_of_passing2" size="15" value="<?php echo $admission_year_of_passing2 ?>"></td>
-                    <td><input type="text" name="add_admission_percentage2" size="15" value="<?php echo $admission_percentage2 ?>"></td>
+                    <td><input type="text" name="add_admission_course2" size="15"
+                        value="<?php echo $admission_course2 ?>"></td>
+                    <td><input type="text" name="add_admission_board_university2" size="15"
+                        value="<?php echo $admission_board_university2 ?>"></td>
+                    <td><input type="text" name="add_admission_year_of_passing2" size="15"
+                        value="<?php echo $admission_year_of_passing2 ?>"></td>
+                    <td><input type="text" name="add_admission_percentage2" size="15"
+                        value="<?php echo $admission_percentage2 ?>"></td>
                   </tr>
                   <tr>
                     <td>3</td>
-                    <td><input type="text" name="add_admission_course3" size="15" value="<?php echo $admission_course3 ?>"></td>
-                    <td><input type="text" name="add_admission_board_university3" size="15" value="<?php echo $admission_board_university3 ?>"></td>
-                    <td><input type="text" name="add_admission_year_of_passing3" size="15" value="<?php echo $admission_year_of_passing3 ?>"></td>
-                    <td><input type="text" name="add_admission_percentage3" size="15" value="<?php echo $admission_percentage3 ?>"></td>
+                    <td><input type="text" name="add_admission_course3" size="15"
+                        value="<?php echo $admission_course3 ?>"></td>
+                    <td><input type="text" name="add_admission_board_university3" size="15"
+                        value="<?php echo $admission_board_university3 ?>"></td>
+                    <td><input type="text" name="add_admission_year_of_passing3" size="15"
+                        value="<?php echo $admission_year_of_passing3 ?>"></td>
+                    <td><input type="text" name="add_admission_percentage3" size="15"
+                        value="<?php echo $admission_percentage3 ?>"></td>
                   </tr>
                   <tr>
                     <td>4</td>
-                    <td><input type="text" name="add_admission_course4" size="15" value="<?php echo $admission_course4 ?>"></td>
-                    <td><input type="text" name="add_admission_board_university4" size="15" value="<?php echo $admission_board_university4 ?>"></td>
-                    <td><input type="text" name="add_admission_year_of_passing4" size="15" value="<?php echo $admission_year_of_passing4 ?>"></td>
-                    <td><input type="text" name="add_admission_percentage4" size="15" value="<?php echo $admission_percentage4 ?>"></td>
+                    <td><input type="text" name="add_admission_course4" size="15"
+                        value="<?php echo $admission_course4 ?>"></td>
+                    <td><input type="text" name="add_admission_board_university4" size="15"
+                        value="<?php echo $admission_board_university4 ?>"></td>
+                    <td><input type="text" name="add_admission_year_of_passing4" size="15"
+                        value="<?php echo $admission_year_of_passing4 ?>"></td>
+                    <td><input type="text" name="add_admission_percentage4" size="15"
+                        value="<?php echo $admission_percentage4 ?>"></td>
                   </tr>
                   <tr>
                     <td>5</td>
-                    <td><input type="text" name="add_admission_course5" size="15" value="<?php echo $admission_course5 ?>"></td>
-                    <td><input type="text" name="add_admission_board_university5" size="15" value="<?php echo $admission_board_university5 ?>"></td>
-                    <td><input type="text" name="add_admission_year_of_passing5" size="15" value="<?php echo $admission_year_of_passing5 ?>"></td>
-                    <td><input type="text" name="add_admission_percentage5" size="15" value="<?php echo $admission_percentage5 ?>"></td>
+                    <td><input type="text" name="add_admission_course5" size="15"
+                        value="<?php echo $admission_course5 ?>"></td>
+                    <td><input type="text" name="add_admission_board_university5" size="15"
+                        value="<?php echo $admission_board_university5 ?>"></td>
+                    <td><input type="text" name="add_admission_year_of_passing5" size="15"
+                        value="<?php echo $admission_year_of_passing5 ?>"></td>
+                    <td><input type="text" name="add_admission_percentage5" size="15"
+                        value="<?php echo $admission_percentage5 ?>"></td>
                   </tr>
                 </tbody>
               </table>
@@ -680,9 +792,12 @@ $max_value = $result['id'] + 1;
                 <tbody>
                   <tr>
                     <td>1</td>
-                    <td><input type="text" name="add_admission_name_of_org1" size="15" value="<?php echo $admission_name_of_org1 ?>"></td>
-                    <td><input type="text" name="add_admission_designation1" size="15" value="<?php echo $admission_designation1 ?>"></td>
-                    <td><input type="text" name="add_admission_duration1" size="15" value="<?php echo $admission_duration1 ?>"></td>
+                    <td><input type="text" name="add_admission_name_of_org1" size="15"
+                        value="<?php echo $admission_name_of_org1 ?>"></td>
+                    <td><input type="text" name="add_admission_designation1" size="15"
+                        value="<?php echo $admission_designation1 ?>"></td>
+                    <td><input type="text" name="add_admission_duration1" size="15"
+                        value="<?php echo $admission_duration1 ?>"></td>
                   </tr>
                 </tbody>
               </table>
@@ -697,7 +812,7 @@ $max_value = $result['id'] + 1;
 
             <button type="submit" name="submit" id="add_admission_button" class="btn btn-primary">Submit</button>
 
-        
+
 
           </div>
           </form>
@@ -737,7 +852,7 @@ $max_value = $result['id'] + 1;
   <script src="dist/js/demo.js"></script>
   <!-- Page script -->
   <script>
-    $(function() {
+    $(function () {
       //Initialize Select2 Elements
       $('.select2').select2()
 
@@ -775,12 +890,13 @@ $max_value = $result['id'] + 1;
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf(
+              'month')]
           },
           startDate: moment().subtract(29, 'days'),
           endDate: moment()
         },
-        function(start, end) {
+        function (start, end) {
           $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
         }
       )
@@ -798,24 +914,24 @@ $max_value = $result['id'] + 1;
       //color picker with addon
       $('.my-colorpicker2').colorpicker()
 
-      $('.my-colorpicker2').on('colorpickerChange', function(event) {
+      $('.my-colorpicker2').on('colorpickerChange', function (event) {
         $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
       });
 
-      $("input[data-bootstrap-switch]").each(function() {
+      $("input[data-bootstrap-switch]").each(function () {
         $(this).bootstrapSwitch('state', $(this).prop('checked'));
       });
 
     })
   </script>
   <script>
-    $(document).ready(function() {
-      $('#form_no').on('keyup', function(event) {
+    $(document).ready(function () {
+      $('#form_no').on('keyup', function (event) {
         $.ajax({
           url: 'include/view.php?action=fetch_prospectus_info',
           type: 'POST',
           data: $('#add_admission_form').serializeArray(),
-          success: function(result) {
+          success: function (result) {
             $('#first_name').val('');
             $('#last_name').val('');
             $('#gender').val('0');
@@ -878,9 +994,7 @@ if (isset($_POST['submit'])) {
   $admission_blood_group = $_POST['add_admission_blood_group'];
   $admission_hostel = $_POST['add_admission_hostel'];
   $admission_transport = $_POST['add_admission_transport'];
-  $admission_profile_image = $_POST['add_admission_profile_image'];
-  $student_signature = $_POST['student_signature'];
-  $parent_signature = $_POST['parent_signature'];
+
   $admission_residential_address = $_POST['add_admission_residential_address'];
   $admission_state = $_POST['add_admission_state'];
   $admission_city = $_POST['add_admission_city'];
@@ -920,50 +1034,6 @@ if (isset($_POST['submit'])) {
   $admission_others_per = $_POST['add_admission_others_per'];
   $admission_others_subjects = $_POST['add_admission_others_subjects'];
 
-
-  // $tenth_marksheet = addslashes(file_get_contents($_FILES['add_admission_tenth_marksheet']['tmp_name']));
-  // if (!empty($tenth_marksheet)) {
-
-  //   $admission_tenth_marksheet = $tenth_marksheet;
-  // }
-  // $tenth_passing_certificate = addslashes(file_get_contents($_FILES['add_admission_tenth_passing_certificate']['tmp_name']));
-
-  // if (!empty($tenth_passing_certificate)) {
-  //   $admission_tenth_passing_certificate = $tenth_passing_certificate;
-  // }
-  // $twelve_markesheet = addslashes(file_get_contents($_FILES['add_admission_twelve_markesheet']['tmp_name']));
-  // if (!empty($twelve_markesheet)) {
-  //   $admission_twelve_markesheet = $twelve_markesheet;
-  // }
-  // $twelve_passing_certificate = addslashes(file_get_contents($_FILES['add_admission_twelve_passing_certificate']['tmp_name']));
-  // if (!empty($twelve_passing_certificate)) {
-  //   $admission_twelve_passing_certificate = $twelve_passing_certificate;
-  // }
-  // $graduation_marksheet = addslashes(file_get_contents($_FILES['add_admission_graduation_marksheet']['tmp_name']));
-  // if (!empty($graduation_marksheet)) {
-  //   $admission_graduation_marksheet = $graduation_marksheet;
-  // }
-  // $recent_character_certificate = addslashes(file_get_contents($_FILES['add_admission_recent_character_certificate']['tmp_name']));
-  // if (!empty($graduation_marksheet)) {
-  //   $admission_graduation_marksheet = $graduation_marksheet;
-  // }
-  // $other_certificate = addslashes(file_get_contents($_FILES['add_admission_other_certificate']['tmp_name']));
-  // if (!empty($other_certificate)) {
-  //   $admission_other_certificate = $other_certificate;
-  // }
-  // $character_certificate = addslashes(file_get_contents($_FILES['add_admission_character_certificate']['tmp_name']));
-  // if (!empty($tenth_marksheet)) {
-  //   $admission_character_certificate = $character_certificate;
-  // }
-
-  // $admission_tenth_marksheet = $_POST['add_admission_tenth_marksheet'];
-  // $admission_tenth_passing_certificate = $_POST['add_admission_tenth_passing_certificate'];
-  // $admission_twelve_markesheet = $_POST['add_admission_twelve_markesheet'];
-  // $admission_twelve_passing_certificate = $_POST['add_admission_twelve_passing_certificate'];
-  // $admission_graduation_marksheet = $_POST['add_admission_graduation_marksheet'];
-  // $admission_recent_character_certificate = $_POST['add_admission_recent_character_certificate'];
-  // $admission_other_certificate = $_POST['add_admission_other_certificate'];
-  // $admission_character_certificate = $_POST['add_admission_character_certificate'];
   $admission_board_university1 = $_POST['add_admission_board_university1'];
   $admission_year_of_passing1 = $_POST['add_admission_year_of_passing1'];
   $admission_percentage1 = $_POST['add_admission_percentage1'];
@@ -995,13 +1065,230 @@ if (isset($_POST['submit'])) {
   $status = $_POST['status'];
   $stud_status = $_POST['stud_status'];
 
-  // echo $admission_tenth_passing_certificate;
 
-  $update_admission_query = "UPDATE `tbl_admission` SET `admission_form_no`='$admission_form_no',`admission_no`='$admission_no',`admission_title`='$admission_title',`admission_first_name`='$admission_first_name',`admission_course_name`='$admission_course_name',`admission_session`='$admission_session',`admission_dob`='$admission_dob',`admission_nationality`='$admission_nationality',`admission_aadhar_no`='$admission_aadhar_no',`date_of_admission`='$date_of_admission',`admission_category`='$admission_category',`admission_gender`='$admission_gender',`admission_username`='$admission_username',`admission_password`='$admission_password',`admission_blood_group`='$admission_blood_group',`admission_hostel`='$admission_hostel',`admission_transport`='$admission_transport',`admission_profile_image`='$admission_profile_image',`student_signature`='$student_signature',`parent_signature`='$parent_signature',`admission_residential_address`='$admission_residential_address',`admission_state`='$admission_state',`admission_city`='$admission_city',`admission_district`='$admission_district',`admission_pin_code`='$admission_pin_code',`admission_home_landlineno`='$admission_home_landlineno',`admission_mobile_student`='$admission_mobile_student',`admission_father_phoneno`='$admission_father_phoneno',`admission_emailid_father`='$admission_emailid_father',`admission_emailid_student`='$admission_emailid_student',`admission_father_name`='$admission_father_name',`admission_father_whatsappno`='$admission_father_whatsappno',`admission_mother_name`='$admission_mother_name',`admission_high_school_board_university`='$admission_high_school_board_university',`admission_high_school_college_name`='$admission_high_school_college_name',`admission_high_school_passing_year`='$admission_high_school_passing_year',`admission_high_school_per`='$admission_high_school_per',`admission_high_school_subjects`='$admission_high_school_subjects',`admission_intermediate_board_university`='$admission_intermediate_board_university',`admission_intermediate_college_name`='$admission_intermediate_college_name',`admission_intermediate_passing_year`='$admission_intermediate_passing_year',`admission_intermediate_per`='$admission_intermediate_per',`admission_intermediate_subjects`='$admission_intermediate_subjects',`admission_graduation_board_university`='$admission_graduation_board_university',`admission_graduation_college_name`='$admission_graduation_college_name',`admission_graduation_passing_year`='$admission_graduation_passing_year',`admission_graduation_per`='$admission_graduation_per',`admission_graduation_subjects`='$admission_graduation_subjects',`admission_post_graduation_board_university`='$admission_post_graduation_board_university',`admission_post_graduation_college_name`='$admission_post_graduation_college_name',`admission_post_graduation_others`='$admission_post_graduation_others',`admission_post_graduation_per`='$admission_post_graduation_per',`admission_post_graduation_subjects`='$admission_post_graduation_subjects',`admission_others_board_university`='$admission_others_board_university',`admission_others_college_name`='$admission_others_college_name',`admission_others_passing_year`='$admission_others_passing_year',`admission_others_per`='$admission_others_per',`admission_others_subjects`='$admission_others_subjects',`admission_tenth_marksheet`='$admission_tenth_marksheet',`admission_tenth_passing_certificate`='$admission_tenth_passing_certificate',`admission_twelve_markesheet`='$admission_twelve_markesheet',`admission_twelve_passing_certificate`='$admission_twelve_passing_certificate',`admission_graduation_marksheet`='$admission_graduation_marksheet',`admission_recent_character_certificate`='$admission_recent_character_certificate',`admission_other_certificate`='$admission_other_certificate',`admission_character_certificate`='$admission_character_certificate',`admission_course1`='$admission_course_name',`admission_board_university1`='$admission_board_university1',`admission_year_of_passing1`='$admission_year_of_passing1',`admission_percentage1`='$admission_percentage1',`admission_course2`='$admission_course2',`admission_board_university2`='$admission_board_university2',`admission_year_of_passing2`='$admission_year_of_passing2',`admission_percentage2`='$admission_percentage2',`admission_course3`='$admission_course3',`admission_board_university3`='$admission_board_university3',`admission_year_of_passing3`='$admission_year_of_passing3',`admission_percentage3`='$admission_percentage3',`admission_course4`='$admission_course4',`admission_board_university4`='$admission_board_university4',`admission_year_of_passing4`='$admission_year_of_passing4',`admission_percentage4`='$admission_percentage4',`admission_course5`='$admission_course5',`admission_board_university5`='$admission_board_university5',`admission_year_of_passing5`='$admission_year_of_passing5',`admission_percentage5`='$admission_percentage5',`admission_name_of_org1`='$admission_name_of_org1',`admission_designation1`='$admission_designation1',`admission_duration1`='$admission_duration1' WHERE `admission_id`='$admission_id'";
+  $update_admission_query = "UPDATE `tbl_admission` SET `admission_form_no`='$admission_form_no',`admission_no`='$admission_no',`admission_title`='$admission_title',`admission_first_name`='$admission_first_name',`admission_course_name`='$admission_course_name',`admission_session`='$admission_session',`admission_dob`='$admission_dob',`admission_nationality`='$admission_nationality',`admission_aadhar_no`='$admission_aadhar_no',`date_of_admission`='$date_of_admission',`admission_category`='$admission_category',`admission_gender`='$admission_gender',`admission_username`='$admission_username',`admission_password`='$admission_password',`admission_blood_group`='$admission_blood_group',`admission_hostel`='$admission_hostel',`admission_transport`='$admission_transport',`admission_residential_address`='$admission_residential_address',`admission_state`='$admission_state',`admission_city`='$admission_city',`admission_district`='$admission_district',`admission_pin_code`='$admission_pin_code',`admission_home_landlineno`='$admission_home_landlineno',`admission_mobile_student`='$admission_mobile_student',`admission_father_phoneno`='$admission_father_phoneno',`admission_emailid_father`='$admission_emailid_father',`admission_emailid_student`='$admission_emailid_student',`admission_father_name`='$admission_father_name',`admission_father_whatsappno`='$admission_father_whatsappno',`admission_mother_name`='$admission_mother_name',`admission_high_school_board_university`='$admission_high_school_board_university',`admission_high_school_college_name`='$admission_high_school_college_name',`admission_high_school_passing_year`='$admission_high_school_passing_year',`admission_high_school_per`='$admission_high_school_per',`admission_high_school_subjects`='$admission_high_school_subjects',`admission_intermediate_board_university`='$admission_intermediate_board_university',`admission_intermediate_college_name`='$admission_intermediate_college_name',`admission_intermediate_passing_year`='$admission_intermediate_passing_year',`admission_intermediate_per`='$admission_intermediate_per',`admission_intermediate_subjects`='$admission_intermediate_subjects',`admission_graduation_board_university`='$admission_graduation_board_university',`admission_graduation_college_name`='$admission_graduation_college_name',`admission_graduation_passing_year`='$admission_graduation_passing_year',`admission_graduation_per`='$admission_graduation_per',`admission_graduation_subjects`='$admission_graduation_subjects',`admission_post_graduation_board_university`='$admission_post_graduation_board_university',`admission_post_graduation_college_name`='$admission_post_graduation_college_name',`admission_post_graduation_others`='$admission_post_graduation_others',`admission_post_graduation_per`='$admission_post_graduation_per',`admission_post_graduation_subjects`='$admission_post_graduation_subjects',`admission_others_board_university`='$admission_others_board_university',`admission_others_college_name`='$admission_others_college_name',`admission_others_passing_year`='$admission_others_passing_year',`admission_others_per`='$admission_others_per',`admission_others_subjects`='$admission_others_subjects',`admission_course1`='$admission_course_name',`admission_board_university1`='$admission_board_university1',`admission_year_of_passing1`='$admission_year_of_passing1',`admission_percentage1`='$admission_percentage1',`admission_course2`='$admission_course2',`admission_board_university2`='$admission_board_university2',`admission_year_of_passing2`='$admission_year_of_passing2',`admission_percentage2`='$admission_percentage2',`admission_course3`='$admission_course3',`admission_board_university3`='$admission_board_university3',`admission_year_of_passing3`='$admission_year_of_passing3',`admission_percentage3`='$admission_percentage3',`admission_course4`='$admission_course4',`admission_board_university4`='$admission_board_university4',`admission_year_of_passing4`='$admission_year_of_passing4',`admission_percentage4`='$admission_percentage4',`admission_course5`='$admission_course5',`admission_board_university5`='$admission_board_university5',`admission_year_of_passing5`='$admission_year_of_passing5',`admission_percentage5`='$admission_percentage5',`admission_name_of_org1`='$admission_name_of_org1',`admission_designation1`='$admission_designation1',`admission_duration1`='$admission_duration1' WHERE `admission_id`='$admission_id'";
   $update_admission_result = mysqli_query($con, $update_admission_query);
+  
   if ($update_admission_result) {
-    echo "data successfully update";
-  }
+ 
+    $msg= "Data updated successfully";
+}
+else{
+  echo "sonthing went wrong";
+}
+// image update
+
+if(!empty($_FILES['add_admission_profile_image']['tmp_name'])){
+ $add_admission_profile_image =addslashes(file_get_contents($_FILES['add_admission_profile_image']['tmp_name'])); 
+
+
+  $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_profile_image`='$add_admission_profile_image',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+$update_admission_result1 = mysqli_query($con, $update_admission_query1);
+if ($update_admission_result1) {
+$msg="data update succesfully";
+}
+else{
+echo "data not be updated";
+}
+}
+if(!empty($_FILES['add_admission_profile_image']['tmp_name'])){
+  $add_admission_profile_image =addslashes(file_get_contents($_FILES['add_admission_profile_image']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_profile_image`='$add_admission_profile_image',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+ if(!empty($_FILES['add_admission_profile_image']['tmp_name'])){
+  $add_admission_profile_image =addslashes(file_get_contents($_FILES['add_admission_profile_image']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_profile_image`='$add_admission_profile_image',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+ if(!empty($_FILES['add_admission_profile_image']['tmp_name'])){
+  $add_admission_profile_image =addslashes(file_get_contents($_FILES['add_admission_profile_image']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_profile_image`='$add_admission_profile_image',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+ if(!empty($_FILES['add_admission_profile_image']['tmp_name'])){
+  $add_admission_profile_image =addslashes(file_get_contents($_FILES['add_admission_profile_image']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_tenth_passing_certificate`='$add_admission_profile_image',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+ if(!empty($_FILES['add_admission_tenth_marksheet']['tmp_name'])){
+  $add_admission_tenth_marksheet = addslashes(file_get_contents($_FILES['add_admission_tenth_marksheet']['tmp_name']));
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_tenth_marksheet`='$add_admission_tenth_marksheet',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+
+
+ if(!empty($_FILES['add_admission_tenth_passing_certificate']['tmp_name'])){
+ $add_admission_tenth_passing_certificate = addslashes(file_get_contents($_FILES['add_admission_tenth_passing_certificate']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_tenth_passing_certificate`='$add_admission_tenth_passing_certificate',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+ if(!empty($_FILES['add_admission_twelve_markesheet']['tmp_name'])){
+ $add_admission_twelve_markesheet = addslashes(file_get_contents($_FILES['add_admission_twelve_markesheet']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_twelve_markesheet`='$add_admission_twelve_markesheet',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+
+
+
+
+ if(!empty($_FILES['add_admission_twelve_passing_certificate']['tmp_name'])){
+ $add_admission_twelve_passing_certificate = addslashes(file_get_contents($_FILES['add_admission_twelve_passing_certificate']['tmp_name']));
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_twelve_passing_certificate`='$add_admission_twelve_passing_certificate',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+ if(!empty($_FILES['add_admission_graduation_marksheet']['tmp_name'])){
+$add_admission_graduation_marksheet = addslashes(file_get_contents($_FILES['add_admission_graduation_marksheet']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_graduation_marksheet`='$add_admission_graduation_marksheet',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+
+
+
+ if(!empty($_FILES['add_admission_recent_character_certificate']['tmp_name'])){
+  $add_admission_recent_character_certificate = addslashes(file_get_contents($_FILES['add_admission_recent_character_certificate']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_recent_character_certificate`='$add_admission_recent_character_certificate',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+ if(!empty($_FILES['add_admission_other_certificate']['tmp_name'])){
+$add_admission_other_certificate = addslashes(file_get_contents($_FILES['add_admission_other_certificate']['tmp_name']));
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_other_certificate`='$add_admission_other_certificate',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+
+
+ if(!empty($_FILES['add_admission_character_certificate']['tmp_name'])){
+  $add_admission_character_certificate = addslashes(file_get_contents($_FILES['add_admission_character_certificate']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `admission_character_certificate`='$add_admission_character_certificate',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+
+ if(!empty($_FILES['student_signature']['tmp_name'])){
+  $student_signature = addslashes(file_get_contents($_FILES['student_signature']['tmp_name'])); 
+ 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `student_signature`='$student_signature',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+
+
+
+ if(!empty($_FILES['parent_signature']['tmp_name'])){
+  $parent_signature = addslashes(file_get_contents($_FILES['parent_signature']['tmp_name'])); 
+ 
+ $update_admission_query1 = "UPDATE `tbl_admission` SET `parent_signature`='$parent_signature',`admission_tenth_marksheet`='$add_admission_tenth_marksheet' where  `admission_id`='$admission_id'";
+ $update_admission_result1 = mysqli_query($con, $update_admission_query1);
+ if ($update_admission_result1) {
+ $msg="data update succesfully";
+ }
+ else{
+ echo "data not be updated";
+ }
+ }
+echo $msg;
+
 }
 
 ?>

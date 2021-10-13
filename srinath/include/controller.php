@@ -373,10 +373,10 @@ if (isset($_POST["action"])) {
                             <i class="icon fas fa-exclamation-triangle"></i> This Subject Code already exsits in ' . $add_subject_course_name . ' Course!!!
                         </div>';
             else {
-                $sql = "INSERT INTO `tbl_subject`
-                            (`subject_id`, `subject_course_name`, `subject_code`, `subject_name`, `subject_time`, `status`) 
+              echo  $sql = "INSERT INTO `tbl_subject`
+                            (, `subject_course_name`, `subject_code`, `subject_name`, `subject_time`, `status`) 
                             VALUES 
-                            (NULL,'$add_subject_course_name','$add_subject_code','$add_subject_name','$date_variable_today_month_year_with_timing','$visible')
+                            ('$add_subject_course_name','$add_subject_code','$add_subject_name','$date_variable_today_month_year_with_timing','$visible')
                             ";
                 if ($con->query($sql))
                     echo '
@@ -1938,7 +1938,7 @@ if (isset($_POST["action"])) {
         echo  $delete_id = $_POST["delete_id"];
 ?>
 
-        <?php
+<?php
         if (!empty($delete_id)) {
             $query = "UPDATE `tbl_prospectus` SET `status` = '$trash' where `id`='$delete_id' ";
             $check = $con->query($query);
@@ -2191,10 +2191,10 @@ if (isset($_POST["action"])) {
                                             WHERE `semester_id` = '" . $row_check['semester_id'] . "';
                                             ";
                             } else {
-                                $sql .= "INSERT INTO `tbl_semester`
-                                            (`semester_id`, `course_id`, `fee_academic_year`, `semester`,`exam_fee`,`exam_fine`,`exam_fee_last_date`,`fee_status`, `examname`,`name_of_school`,`examination_month`,`date_of_result`,`add_time`, `status`) 
+                              echo  $sql .= "INSERT INTO `tbl_semester`
+                                            (`course_id`, `fee_academic_year`, `semester`,`exam_fee`,`exam_fine`,`exam_fee_last_date`,`fee_status`, `examname`,`name_of_school`,`examination_month`,`date_of_result`,`add_time`, `status`) 
                                             VALUES 
-                                            (NULL,'$course_id_all','$academic_year','$semester[$i]','$exam_fee[$i]','$exam_fine[$i]','$exam_fee_last_date[$i]','$fee_status[$i]','$examname[$i]','$name_of_school[$i]','$examination_month[$i]','$date_of_result[$i]','$date_variable_today_month_year_with_timing','$visible');
+                                            ('$course_id_all','$academic_year','$semester[$i]','$exam_fee[$i]','$exam_fine[$i]','$exam_fee_last_date[$i]','$fee_status[$i]','$examname[$i]','$name_of_school[$i]','$examination_month[$i]','$date_of_result[$i]','$date_variable_today_month_year_with_timing','$visible');
                                             ";
                             }
                         }
@@ -2220,9 +2220,9 @@ if (isset($_POST["action"])) {
                                     ";
                     } else {
                         $sql .= "INSERT INTO `tbl_semester`
-                                    (`semester_id`, `course_id`, `fee_academic_year`, `semester`,`exam_fee`,`exam_fine`,`exam_fee_last_date`,`fee_status`, `examname`,`name_of_school`,`examination_month`,`date_of_result`, `add_time`, `status`) 
+                                    (`course_id`, `fee_academic_year`, `semester`,`exam_fee`,`exam_fine`,`exam_fee_last_date`,`fee_status`, `examname`,`name_of_school`,`examination_month`,`date_of_result`, `add_time`, `status`) 
                                     VALUES 
-                                    (NULL,'$course_id','$academic_year','$semester[$i]','$exam_fee[$i]','$exam_fine[$i]','$exam_fee_last_date[$i]','$fee_status[$i]','$examname[$i]','$name_of_school[$i]','$examination_month[$i]','$date_of_result[$i]','$date_variable_today_month_year_with_timing','$visible');
+                                    ('$course_id','$academic_year','$semester[$i]','$exam_fee[$i]','$exam_fine[$i]','$exam_fee_last_date[$i]','$fee_status[$i]','$examname[$i]','$name_of_school[$i]','$examination_month[$i]','$date_of_result[$i]','$date_variable_today_month_year_with_timing','$visible');
                                     ";
                     }
                 }
@@ -2311,9 +2311,9 @@ if (isset($_POST["action"])) {
                                     ";
                 } else {
                     $sql .= "INSERT INTO `tbl_subjects`
-                                    (`subject_id`, `course_id`,`semester_id`, `fee_academic_year`, `subject_name`, `subject_code`,`full_marks`,`pass_marks`, `add_time`, `status`) 
+                                    ( `course_id`,`semester_id`, `fee_academic_year`, `subject_name`, `subject_code`,`full_marks`,`pass_marks`, `add_time`, `status`) 
                                     VALUES 
-                                    (NULL,'$course_id','$semester_id','$academic_year','$subject_name[$i]','$subject_code[$i]','$full_marks[$i]','$pass_marks[$i]','$date_variable_today_month_year_with_timing','$visible');";
+                                    ('$course_id','$semester_id','$academic_year','$subject_name[$i]','$subject_code[$i]','$full_marks[$i]','$pass_marks[$i]','$date_variable_today_month_year_with_timing','$visible');";
                 }
             }
             if ($con->multi_query($sql))
