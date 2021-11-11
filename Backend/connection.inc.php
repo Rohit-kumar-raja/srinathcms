@@ -7,5 +7,5 @@ if($_SERVER['HTTP_HOST']=="localhost"){
 else{
     $connection=mysqli_connect("localhost","phpmyadmin","raja@#","srinath_cms");
 }
-
+// somthing is different do
 ?>
