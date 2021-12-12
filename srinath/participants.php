@@ -192,25 +192,25 @@ $event_result = mysqli_query($connection, $get_event);
 
                                             <tr>
                                                 <td><?php echo $i; ?></td>
-                                                <!-- <td><?php echo $get_row['s_name']; ?></td> 
-                                                    <td><?php echo $get_row['s_department']; ?></td>
-                                                    <td><?php echo $get_row['s_f_name']; ?></td>
-                                                    <td><?php echo $get_row['s_dob']; ?></td>
-                                                    <td><?php echo $get_row['s_gender']; ?></td>
-                                                    <td><?php echo $get_row['s_mobile']; ?></td>
-                                                    <td><?php echo $get_row['s_email']; ?></td>
-                                                    <td><?php echo $get_row['s_whatsapp']; ?></td>
-                                                    <td><?php echo $get_row['s_address']; ?></td>
+                                                <!-- <td><?php // echo $get_row['s_name']; ?></td> 
+                                                    <td><?php // echo $get_row['s_department']; ?></td>
+                                                    <td><?php //echo $get_row['s_f_name']; ?></td>
+                                                    <td><?php // echo $get_row['s_dob']; ?></td>
+                                                    <td><?php // echo $get_row['s_gender']; ?></td>
+                                                    <td><?php // echo $get_row['s_mobile']; ?></td>
+                                                    <td><?php // echo $get_row['s_email']; ?></td>
+                                                    <td><?php // echo $get_row['s_whatsapp']; ?></td>
+                                                    <td><?php // echo $get_row['s_address']; ?></td>
                                                     <td>
                                                        
-                                                            <img class="img-fluid" src=<?php echo  ' "data:image/jpeg;base64,' . base64_encode($get_row["s_imgages"]) . '" ' ?>>
+                                                            <img class="img-fluid" src=<?php //echo  ' "data:image/jpeg;base64,' . base64_encode($get_row["s_imgages"]) . '" ' ?>>
 
   
                                                     </td>
 
-                                                    <td><?php $event = str_replace("[", " ", $get_row['event_name']);
-                                                        $event = str_replace("]", " ", $event);
-                                                        echo str_replace('"', " ", $event);
+                                                    <td><?php // $event = str_replace("[", " ", $get_row['event_name']);
+                                                      //  $event = str_replace("]", " ", $event);
+                                                      //  echo str_replace('"', " ", $event);
                                                         ?></td> -->
                                                 <td><?php echo $get_row['college_name']; ?></td>
                                                 <td><?php echo $get_row['type']; ?></td>
@@ -225,7 +225,7 @@ $event_result = mysqli_query($connection, $get_event);
                                                 <td><?php echo $get_row['address1']; ?></td>
                                                 <td><?php echo $get_row['address2']; ?></td>
 
-                                                <td> <a href="http://65.2.20.135/printevent?ins=<?php echo $get_row['college_name'] ?>" class="btn btn-success btn-sm"> Print</a></td>
+                                                <td> <a href="http://65.2.20.135/printevent?ins=<?php echo $get_row['college_name'] ?>" target="_blank" class="btn btn-success btn-sm"> Print</a></td>
                                                 <td> <a href="./event_hindi_inc/participants/delete.php?delete=<?php echo $get_row['college_name'] ?>" class="btn btn-danger btn-sm"> Delete</a></td>
                                             </tr>
                                         <?php $i++;
